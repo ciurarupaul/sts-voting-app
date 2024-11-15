@@ -17,7 +17,7 @@ const port = 3000;
 dbConnection
 	.authenticate()
 	.then(() => {
-		console.log("Db connected successfully.");
+		console.log("Db connected successfully");
 		return dbConnection.sync({ force: true });
 	})
 	.then(() => {
