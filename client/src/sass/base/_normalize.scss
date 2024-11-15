@@ -1,0 +1,30 @@
+@use "./typography.scss";
+
+.sigla {
+	height: 10rem;
+}
+
+button {
+	background-color: var(--background);
+	border: 2px solid var(--background);
+	color: var(--white);
+	padding: 1.4rem;
+	border-radius: 0.8rem;
+	cursor: pointer;
+	transition: all 0.3s;
+
+	font-size: typography.$fontsize-medium;
+	font-weight: 500;
+	font-family: "Jost", sans-serif;
+
+	&:hover {
+		background-color: var(--primary);
+		border: 2px solid var(--primary);
+	}
+}
+
+svg {
+	color: var(--primary);
+	height: 1.75rem;
+	width: 1.75rem;
+}

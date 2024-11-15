@@ -1,0 +1,29 @@
+@use "../base/typography";
+
+@mixin flexCenter {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin flexEnd {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+@mixin flexStart {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+// <--- typography --->
+@mixin largeRed {
+	font-size: typography.$fontsize-large;
+	font-weight: 600;
+	color: var(--primary);
+}
