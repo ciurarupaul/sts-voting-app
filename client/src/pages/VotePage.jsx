@@ -3,7 +3,7 @@ import { GoInfo } from "react-icons/go";
 
 const mockPlay = {
 	title: "Knockout",
-	image: "/knockout25.jpg",
+	image: "/knockout.jpg",
 	description: `Liniștea asurzitoare este spartă de note blânde de pian, privirea publicului fiind captată de un domn elegant ce se prezintă drept Profesorul Charlie Sharp. Se recomandă ca pasionat de știință, ce-i drept, una mai puțin cunoscută în zilele noastre, știință pe care o veți afla pe parcursul spectacolului. Domnul Sharp este naratorul care ne prezintă povestea unor eroine din epoca victoriană. Pot spune că este chiar mentorul celor patru doamne ce își vor lăsa amprenta asupra societății.
 
   Au existat multe femei ce s-au sacrificat și au suferit pentru a recăpăta ceea ce le-a fost luat pe nedrept. Violeta Hunter, Matilda Blackwell, Ana Lamb și Polly Stokes aleg să spargă tiparul, să renunțe la aparențe și să schimbe istoria odată pentru totdeauna.
