@@ -1,5 +1,5 @@
-import Play from "./play.js";
-import Vote from "./vote.js";
+import Play from "./playModel.js";
+import Vote from "./voteModel.js";
 
 const models = {};
 models.Vote = Vote;

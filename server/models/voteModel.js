@@ -10,7 +10,7 @@ const Vote = sequelize.define(
 			allowNull: false,
 		},
 		// the value of the vote, 'DA' or 'NU'
-		castedVote: {
+		voteOption: {
 			type: DataTypes.ENUM("DA", "NU"),
 			allowNull: false,
 		},

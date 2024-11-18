@@ -1,3 +1,5 @@
+import { castVote } from "../../api/apiVote.js";
+import { useAuthContext } from "../context/authContext.jsx";
 import truncateText from "../utils/truncateText.js";
 import { GoInfo } from "react-icons/go";
 
@@ -9,9 +11,20 @@ const mockPlay = {
   Au existat multe femei ce s-au sacrificat și au suferit pentru a recăpăta ceea ce le-a fost luat pe nedrept. Violeta Hunter, Matilda Blackwell, Ana Lamb și Polly Stokes aleg să spargă tiparul, să renunțe la aparențe și să schimbe istoria odată pentru totdeauna.
   
   Violeta Hunter este o tânără infirmieră ce visează să descopere tainele medicinii, însă pentru realizarea acestei dorințe se confruntă cu diverse probleme. Deși viitorul pare să îi rezerve cu totul altceva, ea nu renunță și caută o cale de a-și atinge scopul. Întâlnirea cu Profesorul Charlie Sharp în clinica doctorului James Bell o va conduce la Londra, unde va avea oportunitatea de a trata rănile boxerilor ce au încasat lovituri zdravene în ringul de box. Totuși, lipsa banilor necesari pentru a-și plăti studiile o va constrânge să își ia inima în dinți și să învețe dulcea știință de a lăsa vânătăi.`,
+	stsLink: "https://sts.sisc.ro/Blog/Knockout25.html",
 };
 
 function VotePage() {
+	const { authState, currentPlayId } = useAuthContext();
+
+	async function handleCastVote(option) {
+		try {
+			await castVote(authState.userId, option, currentPlayId);
+		} catch (err) {
+			console.error(err);
+		}
+	}
+
 	return (
 		<div className="content-container votePage__container">
 			<div className="votePage__presentation">
@@ -44,8 +57,20 @@ function VotePage() {
 					{/* will add info modal here */}
 				</div>
 				<div className="votePage__vote-btns">
-					<button className="votePage__vote-btn">DA</button>
-					<button>NU</button>
+					<button
+						onClick={() => {
+							handleCastVote("DA");
+						}}
+					>
+						DA
+					</button>
+					<button
+						onClick={() => {
+							handleCastVote("NU");
+						}}
+					>
+						NU
+					</button>
 				</div>
 			</div>
 		</div>

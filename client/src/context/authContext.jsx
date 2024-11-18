@@ -46,7 +46,9 @@ const AuthProvider = ({ children }) => {
 					});
 
 					console.log(
-						`User ${authState.userId} (existing) is allowed -- ${authState.isAllowedToVote} to vote`
+						`User ${user.uid} (existing) is allowed -- ${
+							response && canVote
+						} -- to vote`
 					);
 				} else {
 					// handle anonymous user sign-in
@@ -65,8 +67,9 @@ const AuthProvider = ({ children }) => {
 						isLoading: false,
 					});
 
+					// dont use authState values to display as they are not updated yet
 					console.log(
-						`User ${authState.userId} (new) is allowed -- ${authState.isAllowedToVote} to vote`
+						`User ${userCredential.user.uid} (new) is allowed -- ${canVote} to vote`
 					);
 				}
 			});
@@ -78,7 +81,7 @@ const AuthProvider = ({ children }) => {
 	}, []);
 
 	return (
-		<AuthContext.Provider value={{ authState }}>
+		<AuthContext.Provider value={{ authState, currentPlayId }}>
 			{authState.isLoading ? <Loader /> : children}
 		</AuthContext.Provider>
 	);

@@ -4,13 +4,10 @@
 
 import fs from "fs";
 import path from "path";
-import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js";
-import PlayModel from "../models/play.js";
-import VoteModel from "../models/vote.js";
+import models from "../models/index.js";
 
-const Play = PlayModel(sequelize, DataTypes);
-const Vote = VoteModel(sequelize, DataTypes);
+const { Vote, Play } = models;
 
 const playsDataPath = path.join(process.cwd(), "seeders", "plays.json");
 

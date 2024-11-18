@@ -1,4 +1,4 @@
-import apiConfig from "./apiConfig";
+import apiConfig from "./apiConfig.js";
 
 export async function isAllowedToVote(anonId, votedPlayId) {
 	const response = await apiConfig.get("/auth/isAllowedToVote", {
