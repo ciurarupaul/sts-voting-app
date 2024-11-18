@@ -1,44 +1,10 @@
-import { getAuth, signInAnonymously } from "firebase/auth";
-import firebaseApp from "../config/firebase.js";
 import models from "../models/index.js";
 
 const authController = {
-	anonSignIn: async (req, res) => {
-		const { anonId } = req.body;
-
-		// !!! might remove this check and include the logic in the authContext
-		// if an anonId is provided, the user already exists
-		if (anonId) {
-			res.status(200).json({
-				message: "User already has an account",
-				anonId,
-			});
-		}
-
-		// if no id is provided, initiate anonymous sign in
-		const auth = getAuth(firebaseApp);
-
-		try {
-			const userCredential = await signInAnonymously(auth);
-
-			res.status(201).json({
-				message: "User signed in anonymously",
-				anonId: userCredential.user.uid,
-			});
-		} catch (error) {
-			console.error("Error signing in anonymously:", error);
-
-			res.status(500).json({
-				message: "Error signing in anonymously",
-				error: error.message,
-			});
-		}
-	},
-
 	// this checks the db for another vote from the same anonId
 	// must provide the user's anonId and the play's id
 	isAllowedToVote: async (req, res) => {
-		const { anonId, votedPlayId } = req.body;
+		const { anonId, votedPlayId } = req.query;
 		const { Vote } = models;
 
 		if (!anonId || !votedPlayId)

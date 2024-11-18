@@ -1,11 +1,10 @@
-import Vote from "./vote";
-import Play from "./play";
+import Play from "./play.js";
+import Vote from "./vote.js";
 
 const models = {};
 models.Vote = Vote;
 models.Play = Play;
 
-// Define associations between tables
 Vote.belongsTo(Play, {
 	foreignKey: "votedPlayId",
 	as: "play",

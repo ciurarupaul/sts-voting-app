@@ -3,22 +3,23 @@ import cors from "cors";
 import express from "express";
 
 // import routes here
+import authRouter from "./routes/authRoutes.js";
 
 const app = express();
 
 app.use(
 	cors({
-		origin: ["http://localhost:3000", "http://localhost:5173"],
+		origin: "http://localhost:5173", // front-end url
 		methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-		credentials: true,
-		enablePreflight: true,
+		credentials: true, // allow cookies
 	})
 );
 
-// Middleware setup
-app.use(express.json()); // For parsing application/json
-app.use(cookieParser()); // For parsing cookies
+// middleware setup
+app.use(express.json()); // for parsing application/json
+app.use(cookieParser()); // for parsing cookies
 
-// Routes
+// routes
+app.use("/api/auth", authRouter);
 
 export default app;
