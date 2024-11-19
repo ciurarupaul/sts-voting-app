@@ -21,6 +21,11 @@ button {
 		background-color: var(--primary);
 		border: 2px solid var(--primary);
 	}
+
+	&:disabled {
+		background-color: var(--background--dark);
+		cursor: not-allowed;
+	}
 }
 
 svg {

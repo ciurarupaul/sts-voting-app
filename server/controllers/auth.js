@@ -1,4 +1,5 @@
 import models from "../models/index.js";
+import checkPlayId from "../utils/checkPlayId.js";
 
 const authController = {
 	// this checks the db for another vote from the same anonId
@@ -12,6 +13,11 @@ const authController = {
 				message: "Please provide the id for both the play and the user",
 				isAllowed: false,
 			});
+
+		const response = checkPlayId(votedPlayId);
+		if (!response) {
+			res.status(400).json({ message: "Invalid play id" });
+		}
 
 		try {
 			const existingVote = await Vote.findOne({
@@ -34,7 +40,7 @@ const authController = {
 					isAllowed: true,
 				});
 		} catch (error) {
-			console.error("Error checking eligibility:", error);
+			console.log("Error checking eligibility:", error);
 
 			res.status(500).json({
 				message: "Error checking eligibility",

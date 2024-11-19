@@ -18,7 +18,6 @@ const Vote = sequelize.define(
 		votedPlayId: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
-			primaryKey: true,
 			references: {
 				model: "Plays",
 				key: "playId",
@@ -28,6 +27,12 @@ const Vote = sequelize.define(
 	{
 		tableName: "Votes",
 		freezeTableName: true,
+		indexes: [
+			{
+				unique: true,
+				fields: ["anonId", "votedPlayId"],
+			},
+		],
 	}
 );
 

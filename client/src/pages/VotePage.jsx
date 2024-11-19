@@ -1,4 +1,3 @@
-import { castVote } from "../../api/apiVote.js";
 import { useAuthContext } from "../context/authContext.jsx";
 import truncateText from "../utils/truncateText.js";
 import { GoInfo } from "react-icons/go";
@@ -15,11 +14,11 @@ const mockPlay = {
 };
 
 function VotePage() {
-	const { authState, currentPlayId } = useAuthContext();
+	const { authState, castVoteInContext } = useAuthContext();
 
 	async function handleCastVote(option) {
 		try {
-			await castVote(authState.userId, option, currentPlayId);
+			await castVoteInContext(option);
 		} catch (err) {
 			console.error(err);
 		}
@@ -52,15 +51,22 @@ function VotePage() {
 
 			{/* voting section */}
 			<div className="votePage__vote">
-				<div className="votePage__vote-title">
-					Votează <GoInfo />
-					{/* will add info modal here */}
-				</div>
+				{authState.isAllowedToVote ? (
+					<div className="votePage__vote-title">
+						Votează <GoInfo />
+						{/* will add info modal here */}
+					</div>
+				) : (
+					<div className="votePage__vote-title">
+						Vot deja înregistrat <GoInfo />
+					</div>
+				)}
 				<div className="votePage__vote-btns">
 					<button
 						onClick={() => {
 							handleCastVote("DA");
 						}}
+						disabled={!authState.isAllowedToVote}
 					>
 						DA
 					</button>
@@ -68,6 +74,7 @@ function VotePage() {
 						onClick={() => {
 							handleCastVote("NU");
 						}}
+						disabled={!authState.isAllowedToVote}
 					>
 						NU
 					</button>

@@ -18,7 +18,7 @@ dbConnection
 	.authenticate()
 	.then(() => {
 		console.log("Db connected successfully");
-		return dbConnection.sync({ force: true });
+		return dbConnection;
 	})
 	.then(() => {
 		console.log("Db synchronized.");

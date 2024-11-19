@@ -7,6 +7,11 @@ function getCookie(name) {
 	return "";
 }
 
+function setCookie(name, value) {
+	document.cookie = `${name}=${JSON.stringify(value)}`;
+}
+
+// check for flags
 function hasVoted(anonId, playId) {
 	// check localStorage for votes
 	const votes = JSON.parse(localStorage.getItem("votes")) || [];
@@ -23,6 +28,30 @@ function hasVoted(anonId, playId) {
 	return votedInLocalStorage || votedInCookies;
 }
 
-// will also add functions to set the flags
+function addFlags(anonId, playId) {
+	const newVote = { anonId, playId };
 
-export { hasVoted };
+	// update localStorage
+	const localVotes = JSON.parse(localStorage.getItem("votes")) || [];
+	if (
+		!localVotes.some(
+			(vote) => vote.anonId === anonId && vote.playId === playId
+		)
+	) {
+		localVotes.push(newVote);
+		localStorage.setItem("votes", JSON.stringify(localVotes));
+	}
+
+	// update cookies
+	const cookieVotes = JSON.parse(getCookie("votes") || "[]");
+	if (
+		!cookieVotes.some(
+			(vote) => vote.anonId === anonId && vote.playId === playId
+		)
+	) {
+		cookieVotes.push(newVote);
+		setCookie("votes", cookieVotes);
+	}
+}
+
+export { hasVoted, addFlags };
