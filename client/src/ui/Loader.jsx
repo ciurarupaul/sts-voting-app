@@ -1,8 +1,8 @@
-export function Loader({ children }) {
+export function Loader() {
 	return (
-		<div className="loader loader--only">
-			<div className="loader-spinner" />
-			<div className="loader-text">Loading...</div>
+		<div className="loader">
+			<div className="loader__spinner" />
+			<div className="loader__text">Loading...</div>
 		</div>
 	);
 }

@@ -5,6 +5,7 @@ import express from "express";
 // import routes here
 import authRouter from "./routes/authRoutes.js";
 import voteRouter from "./routes/voteRoutes.js";
+import playRouter from "./routes/playRoutes.js";
 
 const app = express();
 
@@ -23,5 +24,6 @@ app.use(cookieParser()); // for parsing cookies
 // routes
 app.use("/api/auth", authRouter);
 app.use("/api/vote", voteRouter);
+app.use("/api/play", playRouter);
 
 export default app;

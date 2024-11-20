@@ -2,31 +2,22 @@
 ********** ISSUES **********
 in development (i hope not in prod as well), firebase generates two ids for a new user -- might be because of the strict mode / two renders from dev env -- fix later
 
-isAllowedToVote from authContext MUST be updated once the vote is cast
-
-two votes are not allowed from the same device??? no anonId or flags present, check model definition
 */
-
-// further optimizations
-// -- set expiration for flags (~2h)
-// -- look into mySQL atomic transactions for casting votes (so there arent multiple vote requests at the same time)
 
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
-import firebaseConfig from "../../api/firebase";
-import { Loader } from "../ui/Loader";
-import { hasVoted } from "../utils/flagManipulation";
 import { isAllowedToVote } from "../../api/apiAuth";
 import { castVote } from "../../api/apiVote";
-import { addFlags } from "../utils/flagManipulation";
+import firebaseConfig from "../../api/firebase";
+import { addFlags, hasVoted } from "../utils/flagManipulation";
+import { Loader } from "../ui/Loader";
+import { usePlayContext } from "./playContext";
 
 const AuthContext = createContext();
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-
-const currentPlayId = 1; // will get this dynamically from db later
 
 const AuthProvider = ({ children }) => {
 	const [authState, setAuthState] = useState({
@@ -35,9 +26,23 @@ const AuthProvider = ({ children }) => {
 		isLoading: true,
 	});
 
+	const { playState } = usePlayContext();
+	const currentPlayId = playState.currentPlay
+		? playState.currentPlay.playId
+		: null;
+
 	let listenerActive = false;
 
 	useEffect(() => {
+		if (!currentPlayId) {
+			console.log("No active play. Skipping authentication logic.");
+			setAuthState((prevState) => ({
+				...prevState,
+				isLoading: false, // Stop loading state even when there's no play
+			}));
+			return;
+		}
+
 		// firebase's onAuthChanges is a listener that tracks changes in authentication state for the given user. unsubscribe as in unmount listener / stop consuming resources when the listener is not needed
 		if (listenerActive) return;
 		listenerActive = true;

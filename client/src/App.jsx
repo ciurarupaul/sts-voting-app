@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./context/authContext.jsx";
+import { PlayProvider } from "./context/playContext.jsx";
 
-import AppLayout from "./ui/AppLayout";
-import ErrorPage from "./pages/ErrorPage";
-import VotePage from "./pages/VotePage";
-import { AuthProvider } from "./context/authContext";
+import ErrorPage from "./pages/ErrorPage.jsx";
+import AppLayout from "./ui/AppLayout.jsx";
 
 function AppRoutes() {
 	return (
@@ -13,9 +13,7 @@ function AppRoutes() {
 					path="/"
 					errorElement={<ErrorPage />}
 					element={<AppLayout />}
-				>
-					<Route index element={<VotePage />} />
-				</Route>
+				></Route>
 			</Routes>
 		</BrowserRouter>
 	);
@@ -23,8 +21,10 @@ function AppRoutes() {
 
 export default function App() {
 	return (
-		<AuthProvider>
-			<AppRoutes />
-		</AuthProvider>
+		<PlayProvider>
+			<AuthProvider>
+				<AppRoutes />
+			</AuthProvider>
+		</PlayProvider>
 	);
 }

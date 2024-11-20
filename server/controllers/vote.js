@@ -2,8 +2,6 @@ import { isAllowedToVote } from "../../client/api/apiAuth.js";
 import models from "../models/index.js";
 import checkPlayId from "../utils/checkPlayId.js";
 
-// change authState and add flags !!!
-
 const voteController = {
 	castVote: async (req, res) => {
 		const { Vote } = models;
