@@ -29,6 +29,10 @@ const PlayProvider = ({ children }) => {
 		};
 
 		fetchCurrentPlay();
+
+		const interval = setInterval(fetchCurrentPlay, 60000);
+
+		return () => clearInterval(interval);
 	}, []);
 
 	return (

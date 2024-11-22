@@ -6,10 +6,8 @@ import { GoInfo } from "react-icons/go";
 function VotePage() {
 	const { authState, castVoteInContext } = useAuthContext();
 	const { playState } = usePlayContext();
-	console.log(playState);
 
 	const play = playState.currentPlay;
-	console.log(play);
 
 	async function handleCastVote(option) {
 		try {
@@ -20,7 +18,7 @@ function VotePage() {
 	}
 
 	return (
-		<div className="content-container votePage__container">
+		<div className="content-container votePage">
 			<div className="votePage__presentation">
 				{/* play presentation */}
 				<img
@@ -32,13 +30,13 @@ function VotePage() {
 				<div className="votePage__presentation-description">
 					{truncateText(play.description, 300)}
 					...
-					{/* <a
+					<a
 						className="votePage__presentation-description-redirect"
-						onClick={() => window.open(play.stsLink, "_blank")}
+						onClick={() => window.open(play.link, "_blank")}
 					>
 						{" "}
 						See more
-					</a> */}
+					</a>
 				</div>
 			</div>
 

@@ -40,7 +40,8 @@ body {
 }
 
 .content-container {
-	height: calc(100vh - 10rem);
+	max-height: calc(100vh - 11rem);
+	// 10rem sigla + 1rem margin-bottom
 	width: 90%;
 	margin: 0 auto;
 }

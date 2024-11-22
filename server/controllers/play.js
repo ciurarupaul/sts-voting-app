@@ -1,16 +1,27 @@
-import models from "../models/index.js";
 import { Op } from "sequelize";
+import models from "../models/index.js";
+
+// if more multiple palys have an active vote session at the same time, only the first one will be displayed
+// that shouldn't happen, just fyi
 
 const playControler = {
 	getCurrentPlay: async (req, res) => {
 		const { Play } = models;
 
 		try {
-			const now = new Date();
+			const currentDate = new Date();
+			const timeZoneOffset = 2 * 60; // utc + 2
+
+			const now = new Date(
+				currentDate.getTime() + timeZoneOffset * 60 * 1000
+			);
+
 			const activePlay = await Play.findOne({
 				where: {
-					startVote: { [Op.lte]: now },
-					endVote: { [Op.gte]: now },
+					[Op.and]: [
+						{ startVote: { [Op.lte]: now } },
+						{ endVote: { [Op.gte]: now } },
+					],
 				},
 			});
 

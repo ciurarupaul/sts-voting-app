@@ -21,6 +21,10 @@ const Play = sequelize.define(
 			type: DataTypes.STRING,
 			allowNull: true,
 		},
+		link: {
+			type: DataTypes.STRING,
+			allowNull: true,
+		},
 		// the date and time when voting for this play starts
 		startVote: {
 			type: DataTypes.DATE,

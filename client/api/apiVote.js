@@ -7,6 +7,5 @@ export async function castVote(anonId, voteOption, votedPlayId) {
 		votedPlayId,
 	});
 
-	console.log("castVote response: ", response);
 	return response;
 }

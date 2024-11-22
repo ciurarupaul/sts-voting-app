@@ -9,11 +9,8 @@ function AppRoutes() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route
-					path="/"
-					errorElement={<ErrorPage />}
-					element={<AppLayout />}
-				></Route>
+				<Route path="/" element={<AppLayout />} />
+				<Route path="*" element={<ErrorPage />} />
 			</Routes>
 		</BrowserRouter>
 	);

@@ -6,11 +6,11 @@ function AppLayout() {
 	const { playState } = usePlayContext();
 
 	const play = playState.currentPlay;
-	console.log("playState received:", play);
+	console.log("Searched db. Current play:", play?.title);
 
 	return (
 		<div id="container">
-			<img src="/sigla.png" className="footer" alt="Logo" />
+			<img src="/logo.png" className="footer" alt="Logo" />
 			{playState.currentPlay ? <VotePage /> : <FallbackPage />}
 		</div>
 	);

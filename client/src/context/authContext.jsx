@@ -1,9 +1,3 @@
-/* 
-********** ISSUES **********
-in development (i hope not in prod as well), firebase generates two ids for a new user -- might be because of the strict mode / two renders from dev env -- fix later
-
-*/
-
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signInAnonymously } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -35,10 +29,10 @@ const AuthProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (!currentPlayId) {
-			console.log("No active play. Skipping authentication logic.");
+			console.log("No active play. Skipping auth logic.");
 			setAuthState((prevState) => ({
 				...prevState,
-				isLoading: false, // Stop loading state even when there's no play
+				isLoading: false,
 			}));
 			return;
 		}
@@ -50,7 +44,7 @@ const AuthProvider = ({ children }) => {
 		const unsubscribe = onAuthStateChanged(auth, async (user) => {
 			// if there is an authenticated user
 			if (user) {
-				console.log("went on the existing user path");
+				console.log("user already exists");
 				// check for flags in cookies and localStorage
 				const canVote = !hasVoted(user.uid, currentPlayId);
 
@@ -64,12 +58,12 @@ const AuthProvider = ({ children }) => {
 				});
 
 				console.log(
-					`User ${user.uid} (existing) is allowed -- ${
+					`${user.uid} is allowed -- ${
 						response && canVote
 					} -- to vote`
 				);
 			} else {
-				console.log("went on the new user path");
+				console.log("new user. created new id");
 				// handle anonymous user sign-in
 				const userCredential = await signInAnonymously(auth);
 
@@ -80,8 +74,6 @@ const AuthProvider = ({ children }) => {
 
 				// no need to check db as well, since the anonId is new
 
-				console.log("new id", userCredential.user.uid);
-
 				setAuthState({
 					userId: userCredential.user.uid,
 					isAllowedToVote: canVote,
@@ -90,7 +82,7 @@ const AuthProvider = ({ children }) => {
 
 				// dont use authState values to display as they are not updated yet
 				console.log(
-					`User ${userCredential.user.uid} (new) is allowed -- ${canVote} to vote`
+					`${userCredential.user.uid} is allowed -- ${canVote} to vote`
 				);
 			}
 		});
@@ -99,7 +91,7 @@ const AuthProvider = ({ children }) => {
 			unsubscribe();
 			listenerActive = false;
 		};
-	}, []);
+	}, [currentPlayId]);
 
 	const castVoteInContext = async (voteOption) => {
 		try {
