@@ -31,17 +31,19 @@ html {
 body {
 	box-sizing: border-box;
 	min-height: fit-content;
-	height: 100vh;
+	max-height: 100vh;
 	background-color: #000000;
 }
 
 #container {
 	height: 100vh;
+	max-height: 100vh;
+	overflow: scroll;
 }
 
 .content-container {
 	max-height: calc(100vh - 11rem);
 	// 10rem sigla + 1rem margin-bottom
-	width: 90%;
+	width: 85%;
 	margin: 0 auto;
 }

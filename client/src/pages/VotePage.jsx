@@ -26,9 +26,8 @@ function VotePage() {
 					className="votePage__presentation-image"
 				/>
 				<div className="votePage__presentation-title">{play.title}</div>
-				{/* will later calc the num of words based on device height -- somehow */}
 				<div className="votePage__presentation-description">
-					{truncateText(play.description, 300)}
+					{truncateText(play.description, 400)}
 					...
 					<a
 						className="votePage__presentation-description-redirect"
