@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const dbConnection = new Sequelize("sts-voting-app", process.env.MYSQL, process.env.PASSWORD, {
+const dbConnection = new Sequelize("1_sts_voting", process.env.MYSQL, process.env.PASSWORD, {
 	host: "localhost",
 	dialect: "mysql",
 	define: {
