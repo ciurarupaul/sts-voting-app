@@ -1,6 +1,9 @@
 import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
 
-const dbConnection = new Sequelize("sts-voting-app", "root", "", {
+dotenv.config();
+
+const dbConnection = new Sequelize("sts-voting-app", process.env.MYSQL, process.env.PASSWORD, {
 	host: "localhost",
 	dialect: "mysql",
 	define: {
