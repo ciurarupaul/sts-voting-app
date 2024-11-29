@@ -13,8 +13,10 @@ const PlayProvider = ({ children }) => {
 	useEffect(() => {
 		const fetchCurrentPlay = async () => {
 			try {
+				console.log("execute playContext");
 				const play = await getCurrentPlay();
 
+				console.log("current play: ", play.title);
 				setPlayState({
 					currentPlay: play,
 					isLoading: false,

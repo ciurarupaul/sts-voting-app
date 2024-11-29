@@ -1,4 +1,5 @@
 export default function ErrorPage() {
+	console.log("loaded fallback page");
 	return (
 		<div className="content-container fallback">
 			<div className="fallback__title">

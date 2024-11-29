@@ -1,17 +1,10 @@
-import { usePlayContext } from "../context/playContext";
-import FallbackPage from "../pages/FallbackPage";
-import VotePage from "../pages/VotePage";
+import { Outlet } from "react-router-dom";
 
 function AppLayout() {
-	const { playState } = usePlayContext();
-
-	const play = playState.currentPlay;
-	console.log("Searched db. Current play:", play?.title);
-
 	return (
 		<div id="container">
-			<img src="/logo.png" className="footer" alt="Logo" />
-			{playState.currentPlay ? <VotePage /> : <FallbackPage />}
+			<img src="/logo.png" className="logo" alt="Logo" />
+			<Outlet />
 		</div>
 	);
 }

@@ -38,12 +38,17 @@ body {
 #container {
 	height: 100vh;
 	max-height: 100vh;
-	overflow: scroll;
+	width: 90%;
+	margin: 0 auto;
+	position: relative;
 }
 
 .content-container {
-	max-height: calc(100vh - 11rem);
 	// 10rem sigla + 1rem margin-bottom
-	width: 85%;
-	margin: 0 auto;
+	max-height: calc(100vh - 11rem);
+}
+
+.logo {
+	height: 10rem;
+	margin-left: -3rem;
 }

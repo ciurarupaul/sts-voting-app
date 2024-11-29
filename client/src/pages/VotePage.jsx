@@ -2,6 +2,7 @@ import { useAuthContext } from "../context/authContext.jsx";
 import { usePlayContext } from "../context/playContext.jsx";
 import truncateText from "../utils/truncateText.js";
 import { GoInfo } from "react-icons/go";
+import FallbackPage from "../pages/FallbackPage.jsx";
 
 function VotePage() {
 	const { authState, castVoteInContext } = useAuthContext();
@@ -16,6 +17,8 @@ function VotePage() {
 			console.error(err);
 		}
 	}
+
+	// if (!playState.currentPlay) return <FallbackPage />;
 
 	return (
 		<div className="content-container votePage">
