@@ -1,0 +1,49 @@
+@use "../abstracts/mixins";
+@use "./typography";
+@use "./normalize";
+
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
+	font-family: "Jost", sans-serif;
+}
+
+:root {
+	--black: #000000;
+	--white: #ffffff;
+
+	--background: #5c0a10; // main background
+	--background--light: #821619; // use for hover --main
+	--background--dark: #2a0f10; // use for hover --secondary
+
+	--primary: #b72025; // text
+	// --primary--bold: #4e1114; // wont use this to simplify color palette
+}
+
+html {
+	font-size: 62.5%;
+	height: 100%;
+}
+
+body {
+	box-sizing: border-box;
+	min-height: fit-content;
+	max-height: 100vh;
+	background-color: #000000;
+}
+
+#container {
+	height: 100vh;
+	max-height: 100vh;
+	overflow: scroll;
+}
+
+.content-container {
+	max-height: calc(100vh - 11rem);
+	// 10rem sigla + 1rem margin-bottom
+	width: 85%;
+	margin: 0 auto;
+}

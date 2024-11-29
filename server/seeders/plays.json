@@ -1,0 +1,22 @@
+{
+	"plays": [
+		{
+			"playId": 1,
+			"title": "Knockout",
+			"description": "În ziua de azi, atât femeile cât și bărbații pot face orice își doresc, indiferent de gen sau de statutul lor social, însă nu a fost mereu așa, mai ales pentru doamne. La început, femeile erau percepute ca fiind subordonate sexului masculin, obligate de mentalitatea societății să se supună unui stil de viață nedrept și primejdios. Însă, micuțele doamne nu au înălțat steagul alb în fața societății nedrepte, ci au luptat pentru drepturile și puterea de mult răpită. Un fragment din lunga istorie a femeilor este prezentat în piesa Knockout - Dulcea Știință de a face Vânătăi.",
+			"image": "/knockout.jpg",
+			"link": "https://sts.sisc.ro/Blog/Knockout25.html",
+			"startVote": "2024-11-22T00:00:00.000Z",
+			"endVote": "2024-11-22T00:05:00.000Z"
+		},
+		{
+			"playId": 2,
+			"title": "Un spectacol dumnezeiesc",
+			"description": "Reduceți. Reciclați. Reutilizați. Această filosofie din ecologie a fost aplicată cu succes de echipa Teatrului Nou, care a reușit să transforme un service auto de 250 de metri pătrați într-o veritabilă sală de spectacole. Aceasta adăpostește și expoziții de artă, iar în prezent sunt expuse sculpturile inspirate din mituri realizate de Radu Tudor Panait. În actuala stagiune, Teatrul Nou îți propune șase spectacole de teatru, care mai de care mai interesante, însă eu îți voi vorbi despre Un spectacol dumnezeiesc, în regia Iuliei Alexandra Neacșu și adaptată după David Javerbaum, a cărui premieră de pe Broadway l-a avut în rolul principal pe actorul Jim Parsons. Pe parcursul lungii și strălucitei sale cariere, Dumnezeu Le-a văzut pe toate sau, mai bine spus, Le-a făcut pe toate.",
+			"image": "/unSpectacolDumnezeiesc.jpg",
+			"link": "https://sts.sisc.ro/Blog/SpectacolDumnezeiesc.html",
+			"startVote": "2024-11-23T00:00:00.000Z",
+			"endVote": "2024-11-23T00:05:00.000Z"
+		}
+	]
+}
