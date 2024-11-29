@@ -12,7 +12,7 @@ app.get("/reset", async (req, res) => {
 });
 
 // connect to db
-const port = 3000;
+const port = 5888;
 
 dbConnection
 	.authenticate()
