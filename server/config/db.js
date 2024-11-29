@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-const dbConnection = new Sequelize("sts-voting-app", "root", "", {
+const dbConnection = new Sequelize("1_sts_voting", "root", "", {
 	host: "localhost",
 	dialect: "mysql",
 	define: {
