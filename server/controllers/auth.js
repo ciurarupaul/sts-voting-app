@@ -1,10 +1,13 @@
 import models from "../models/index.js";
 import checkPlayId from "../utils/checkPlayId.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const authController = {
-	// this checks the db for another vote from the same anonId
-	// must provide the user's anonId and the play's id
 	isAllowedToVote: async (req, res) => {
+		// this checks the db for another vote from the same anonId
+		// must provide the user's anonId and the play's id
 		const { anonId, votedPlayId } = req.query;
 		const { Vote } = models;
 
@@ -46,6 +49,44 @@ const authController = {
 				message: "Error checking eligibility",
 				isAllowed: false,
 				error: error.message,
+			});
+		}
+	},
+
+	checkAdminPassword: async (req, res) => {
+		try {
+			const { password: submittedPassword } = req.query;
+
+			if (!process.env.ADMIN_PASSWORD) {
+				console.log("admin password is not defined!");
+				return res.status(500).json({
+					message: "Server misconfig: admin password is not defined",
+					isPasswordCorrect: false,
+				});
+			}
+
+			if (!submittedPassword) {
+				console.log("submitted password is missing or undefined");
+				return res.status(400).json({
+					message: "Invalid input: password is required",
+					isPasswordCorrect: false,
+				});
+			}
+
+			const isPasswordCorrect =
+				submittedPassword === process.env.ADMIN_PASSWORD;
+
+			return res.status(200).json({
+				message: isPasswordCorrect
+					? "Validation successful"
+					: "Validation failed",
+				isPasswordCorrect,
+			});
+		} catch (error) {
+			console.log("Error validating admin password:", error);
+			return res.status(500).json({
+				message: "Unexpected error",
+				isPasswordCorrect: false,
 			});
 		}
 	},

@@ -1,3 +1,5 @@
+import { checkAdminPassword } from "../../api/apiAuth";
+
 function LoginPage() {
 	return <div>login</div>;
 }
