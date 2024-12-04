@@ -1,11 +1,11 @@
-import { useAuthContext } from "../context/authContext.jsx";
+import { useVoteContext } from "../context/voteContext.jsx";
 import { usePlayContext } from "../context/playContext.jsx";
 import truncateText from "../utils/truncateText.js";
 import { GoInfo } from "react-icons/go";
-import FallbackPage from "../pages/FallbackPage.jsx";
+import FallbackPage from "./FallbackPage.jsx";
 
 function VotePage() {
-	const { authState, castVoteInContext } = useAuthContext();
+	const { voteState, castVoteInContext } = useVoteContext();
 	const { playState } = usePlayContext();
 
 	const play = playState.currentPlay;
@@ -18,7 +18,7 @@ function VotePage() {
 		}
 	}
 
-	// if (!playState.currentPlay) return <FallbackPage />;
+	if (!play) return <FallbackPage />;
 
 	return (
 		<div className="content-container votePage">
@@ -44,7 +44,7 @@ function VotePage() {
 
 			{/* voting section */}
 			<div className="votePage__vote">
-				{authState.isAllowedToVote ? (
+				{voteState.isAllowedToVote ? (
 					<div className="votePage__vote-title">
 						Votează <GoInfo />
 						{/* will add info modal here */}
@@ -59,7 +59,7 @@ function VotePage() {
 						onClick={() => {
 							handleCastVote("DA");
 						}}
-						disabled={!authState.isAllowedToVote}
+						disabled={!voteState.isAllowedToVote}
 					>
 						DA
 					</button>
@@ -67,7 +67,7 @@ function VotePage() {
 						onClick={() => {
 							handleCastVote("NU");
 						}}
-						disabled={!authState.isAllowedToVote}
+						disabled={!voteState.isAllowedToVote}
 					>
 						NU
 					</button>

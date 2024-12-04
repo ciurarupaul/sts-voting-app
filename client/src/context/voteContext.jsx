@@ -4,22 +4,23 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { isAllowedToVote } from "../../api/apiAuth";
 import { castVote } from "../../api/apiVote";
 import firebaseConfig from "../../api/firebase";
-import { addFlags, hasVoted } from "../utils/flagManipulation";
 import { Loader } from "../ui/Loader";
+import { addFlags, hasVoted } from "../utils/flagManipulation";
 import { usePlayContext } from "./playContext";
 
-const AuthContext = createContext();
+const VoteContext = createContext();
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const AuthProvider = ({ children }) => {
-	const [authState, setAuthState] = useState({
+const VoteProvider = ({ children }) => {
+	const [voteState, setVoteState] = useState({
 		isAllowedToVote: false,
 		userId: null,
 		isLoading: true,
 	});
 
+	// set active play
 	const { playState } = usePlayContext();
 	const currentPlayId = playState.currentPlay
 		? playState.currentPlay.playId
@@ -30,7 +31,7 @@ const AuthProvider = ({ children }) => {
 	useEffect(() => {
 		if (!currentPlayId) {
 			console.log("No active play. Skipping auth logic.");
-			setAuthState((prevState) => ({
+			setVoteState((prevState) => ({
 				...prevState,
 				isLoading: false,
 			}));
@@ -51,7 +52,7 @@ const AuthProvider = ({ children }) => {
 				// check if they have voted before (check db for votes for specific/current play)
 				const response = await isAllowedToVote(user.uid, currentPlayId);
 
-				setAuthState({
+				setVoteState({
 					isAllowedToVote: canVote && response,
 					userId: user.uid,
 					isLoading: false,
@@ -74,13 +75,13 @@ const AuthProvider = ({ children }) => {
 
 				// no need to check db as well, since the anonId is new
 
-				setAuthState({
+				setVoteState({
 					userId: userCredential.user.uid,
 					isAllowedToVote: canVote,
 					isLoading: false,
 				});
 
-				// dont use authState values to display as they are not updated yet
+				// dont use voteState values to display as they are not updated yet
 				console.log(
 					`${userCredential.user.uid} is allowed -- ${canVote} to vote`
 				);
@@ -96,15 +97,15 @@ const AuthProvider = ({ children }) => {
 	const castVoteInContext = async (voteOption) => {
 		try {
 			const response = await castVote(
-				authState.userId,
+				voteState.userId,
 				voteOption,
 				currentPlayId
 			);
 
 			if (response.data.vote) {
-				addFlags(authState.userId, currentPlayId);
+				addFlags(voteState.userId, currentPlayId);
 
-				setAuthState((prevState) => ({
+				setVoteState((prevState) => ({
 					...prevState,
 					isAllowedToVote: false,
 				}));
@@ -117,28 +118,28 @@ const AuthProvider = ({ children }) => {
 	};
 
 	return (
-		<AuthContext.Provider value={{ authState, castVoteInContext }}>
-			{authState.isLoading ? <Loader /> : children}
-		</AuthContext.Provider>
+		<VoteContext.Provider value={{ voteState, castVoteInContext }}>
+			{voteState.isLoading ? <Loader /> : children}
+		</VoteContext.Provider>
 	);
 };
 
 /* 
 for easier context integration inside components
-eg: const {authState} = useAuthContext();
+eg: const {voteState} = useVoteContext();
 instead of
-const {authState} = useContext(AuthContext);
+const {voteState} = useContext(VoteContext);
 */
-function useAuthContext() {
-	const context = useContext(AuthContext);
+function useVoteContext() {
+	const context = useContext(VoteContext);
 
 	if (context === undefined) {
 		console.log(
-			"useAuthContext was used outside its scope. It must be used inside AuthProvider!"
+			"useVoteContext was used outside its scope. It must be used inside VoteProvider!"
 		);
 	}
 
 	return context;
 }
 
-export { AuthProvider, useAuthContext };
+export { VoteProvider, useVoteContext };
