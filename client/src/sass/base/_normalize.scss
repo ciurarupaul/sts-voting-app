@@ -4,12 +4,17 @@
 	height: 10rem;
 }
 
+// for keyboard navigation (w/ tab)
+:focus-visible {
+	outline: 2px solid var(--white);
+}
+
 button {
 	background-color: var(--background);
 	border: 2px solid var(--background);
 	color: var(--white);
 	padding: 1.4rem;
-	border-radius: 0.8rem;
+	border-radius: 6px;
 	cursor: pointer;
 	transition: all 0.3s;
 
@@ -25,6 +30,21 @@ button {
 	&:disabled {
 		background-color: var(--background--dark);
 		cursor: not-allowed;
+	}
+}
+
+input {
+	background-color: var(--black);
+	border: 2px solid var(--background);
+	color: var(--white);
+	border-radius: 6px;
+	outline: none;
+	padding: 1rem 2rem;
+	font-size: typography.$fontsize-small;
+	cursor: text;
+
+	&:focus {
+		outline: none;
 	}
 }
 

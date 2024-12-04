@@ -156,6 +156,7 @@ const authController = {
 
 			res.status(200).json({
 				message: "Admin is already logged in",
+				token,
 				isLoggedIn: true,
 			});
 		} catch (error) {
