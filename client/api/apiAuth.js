@@ -1,5 +1,7 @@
 import apiConfig from "./apiConfig.js";
 
+// all functions return boolean answers (after destructuring)
+
 export async function isAllowedToVote(anonId, votedPlayId) {
 	const response = await apiConfig.get("/auth/isAllowedToVote", {
 		params: {
@@ -8,15 +10,19 @@ export async function isAllowedToVote(anonId, votedPlayId) {
 		},
 	});
 
-	// boolean res -- true if isAllowed and false if not
 	return response.data.isAllowed;
 }
 
-export async function checkAdminPassword(password) {
+export async function checkAdminPassword(password, anonId) {
 	const response = await apiConfig.get("/auth/checkAdminPassword", {
-		params: { password },
+		params: { password, anonId },
 	});
 
-	// same boolean res
 	return response.data.isPasswordCorrect;
+}
+
+export async function isLoggedIn() {
+	const response = await apiConfig.get("/auth/isLoggedIn");
+
+	return response.data;
 }

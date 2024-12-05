@@ -1,7 +1,7 @@
-import { useVoteContext } from "../context/voteContext.jsx";
-import { usePlayContext } from "../context/playContext.jsx";
-import truncateText from "../utils/truncateText.js";
 import { GoInfo } from "react-icons/go";
+import { usePlayContext } from "../context/playContext.jsx";
+import { useVoteContext } from "../context/voteContext.jsx";
+import truncateText from "../utils/truncateText.js";
 import FallbackPage from "./FallbackPage.jsx";
 
 function VotePage() {
