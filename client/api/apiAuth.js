@@ -22,7 +22,7 @@ export async function checkAdminPassword(password, anonId) {
 }
 
 export async function checkJwtToken() {
-	const response = await apiConfig.get("/auth/isLoggedIn");
+	const response = await apiConfig.get("/auth/checkJwtToken");
 
 	return response.data;
 }

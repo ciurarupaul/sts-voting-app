@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.route("/isAllowedToVote").get(authController.isAllowedToVote);
 router.route("/checkAdminPassword").get(authController.checkAdminPassword);
-router.route("/isLoggedIn").get(authController.checkJwtToken);
+router.route("/checkJwtToken").get(authController.checkJwtToken);
 
 export default router;
