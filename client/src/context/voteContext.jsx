@@ -1,84 +1,64 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { isAllowedToVote } from "../../api/apiAuth";
+import { isAllowedToVote as checkPriorVotes } from "../../api/apiAuth";
 import { castVote } from "../../api/apiVote";
 import { Loader } from "../ui/Loader";
 import { addFlags, hasVoted } from "../utils/flagManipulation";
 import { usePlayContext } from "./playContext";
 import { useUserContext } from "./userContext";
 
+// return isAllowedToVote (boolean) and castVoteInContext (function used to cast a vote)
+
 const VoteContext = createContext();
 
 const VoteProvider = ({ children }) => {
-	const [voteState, setVoteState] = useState({
-		isAllowedToVote: false,
-		isLoading: true,
-	});
+	const [isAllowedToVote, setIsAllowedToVote] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
-	// get play
-	const { playState } = usePlayContext();
-	const currentPlayId = playState.currentPlay
-		? playState.currentPlay.playId
-		: null;
-
-	// get user
-	const { userState } = useUserContext();
-	const user = userState.userId;
-
-	const [isMounted, setIsMounted] = useState(true);
+	const currentPlay = usePlayContext();
+	const anonId = useUserContext();
+	const playId = currentPlay?.playId;
 
 	useEffect(() => {
-		return () => setIsMounted(false);
-	}, []);
-
-	useEffect(() => {
-		if (!currentPlayId) {
-			setVoteState({
-				isAllowedToVote: false,
-				isLoading: false,
-			});
-			return;
-		}
-
 		const checkVote = async () => {
+			setIsLoading(true);
+
+			if (!currentPlay || !anonId) {
+				setIsAllowedToVote(false);
+				setIsLoading(false);
+				return;
+			}
+
 			try {
-				// check for flags in cookies and localStorage
-				const noFlags = !hasVoted(user, currentPlayId);
-				// check if they have voted before (check db for votes for specific/current play)
-				const noPriorVotes = await isAllowedToVote(user, currentPlayId);
+				const noFlags = !hasVoted(anonId, playId); // check cookies and localStorage
+				const noPriorVotes = await checkPriorVotes(anonId, playId); // check DB
 
-				// only set state if component is still mounted
-				if (isMounted) {
-					setVoteState({
-						isAllowedToVote: noFlags && noPriorVotes,
-						isLoading: false,
-					});
-				}
+				setIsAllowedToVote(noFlags && noPriorVotes);
+				console.log(
+					`User is allowed to vote -- ${noFlags && noPriorVotes}`
+				);
 			} catch (error) {
-				console.log("Error checking votes: ", error);
-
-				if (isMounted) {
-					setVoteState({
-						isAllowedToVote: false,
-						isLoading: false,
-					});
-				}
+				console.error("Error checking votes:", error);
+				setIsAllowedToVote(false);
+			} finally {
+				setIsLoading(false);
 			}
 		};
 
 		checkVote();
-	}, [currentPlayId, user, isMounted]);
+	}, [anonId, currentPlay, playId]);
 
-	const castVoteInContext = async (voteOption) => {
+	const castVoteInContext = async (anonId, voteOption, playId) => {
 		try {
-			const response = await castVote(user, voteOption, currentPlayId);
+			if (!playId) {
+				console.log("no playId");
+				return;
+			}
+
+			const response = await castVote(anonId, voteOption, playId);
 
 			if (response.data.vote) {
-				addFlags(user, currentPlayId);
-
-				setVoteState({
-					isAllowedToVote: false,
-					isLoading: false,
-				});
+				addFlags(anonId, playId);
+				setIsAllowedToVote(false);
 			}
 		} catch (error) {
 			console.log("Error casting the vote: ", error);
@@ -86,8 +66,8 @@ const VoteProvider = ({ children }) => {
 	};
 
 	return (
-		<VoteContext.Provider value={{ voteState, castVoteInContext }}>
-			{voteState.isLoading ? <Loader /> : children}
+		<VoteContext.Provider value={{ isAllowedToVote, castVoteInContext }}>
+			{isLoading ? <Loader /> : children}
 		</VoteContext.Provider>
 	);
 };

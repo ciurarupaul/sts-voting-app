@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { checkAdminPassword, isLoggedIn } from "../../api/apiAuth";
+import { checkAdminPassword, checkJwtToken } from "../../api/apiAuth";
 import { Loader } from "../ui/Loader";
-import { useUserContext } from "./userContext";
 
 const AdminContext = createContext();
 
@@ -12,14 +11,16 @@ const AdminProvider = ({ children }) => {
 		isLoading: true,
 	});
 
-	// on mount, check for an existing jwt token and set the admin as logged in if there is a valid token
 	useEffect(() => {
 		const checkLoggedIn = async () => {
+			setAdminState((prevState) => ({ ...prevState, isLoading: true }));
+
 			try {
-				const res = await isLoggedIn();
+				const result = await checkJwtToken();
+				console.log("found logged in user:", result);
 				setAdminState({
-					isLoggedIn: res.isLoggedIn,
-					token: res.token,
+					isLoggedIn: result.isTokenValid,
+					token: result.token,
 					isLoading: false,
 				});
 			} catch (error) {
@@ -28,6 +29,7 @@ const AdminProvider = ({ children }) => {
 					isLoggedIn: false,
 					token: null,
 					isLoading: false,
+					error,
 				});
 			}
 		};
@@ -35,12 +37,39 @@ const AdminProvider = ({ children }) => {
 		checkLoggedIn();
 	}, []);
 
-	const login = async (password) => {
+	const login = async (password, user) => {
 		try {
-			const { user } = useUserContext();
-			const response = await checkAdminPassword(password, user);
+			setAdminState((prevState) => ({ ...prevState, isLoading: true }));
+
+			// if the password is correct, a jwt token will be set
+			await checkAdminPassword(password, user);
+
+			// check said token
+			const { isTokenValid, token: retrievedToken } =
+				await checkJwtToken();
+
+			console.log(`user ${user} is logged in: ${isTokenValid}`);
+
+			if (isTokenValid) {
+				setAdminState({
+					isLoggedIn: true,
+					token: retrievedToken,
+					isLoading: false,
+				});
+			} else {
+				setAdminState({
+					isLoggedIn: false,
+					token: null,
+					isLoading: false,
+				});
+			}
 		} catch (error) {
 			console.log("Error logging in: ", error);
+			setAdminState({
+				isLoggedIn: false,
+				token: null,
+				isLoading: false,
+			});
 		}
 	};
 

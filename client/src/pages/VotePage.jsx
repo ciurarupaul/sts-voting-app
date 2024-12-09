@@ -1,40 +1,43 @@
 import { GoInfo } from "react-icons/go";
 import { usePlayContext } from "../context/playContext.jsx";
+import { useUserContext } from "../context/userContext.jsx";
 import { useVoteContext } from "../context/voteContext.jsx";
 import truncateText from "../utils/truncateText.js";
 import FallbackPage from "./FallbackPage.jsx";
 
 function VotePage() {
-	const { voteState, castVoteInContext } = useVoteContext();
-	const { playState } = usePlayContext();
+	const { isAllowedToVote, castVoteInContext } = useVoteContext();
+	const anonId = useUserContext();
+	const currentPlay = usePlayContext();
+	const playId = currentPlay?.playId;
 
-	const play = playState.currentPlay;
-
-	async function handleCastVote(option) {
+	async function handleCastVote(voteOption) {
 		try {
-			await castVoteInContext(option);
-		} catch (err) {
-			console.error(err);
+			await castVoteInContext(anonId, voteOption, playId);
+		} catch (error) {
+			console.log(error);
 		}
 	}
 
-	if (!play) return <FallbackPage />;
+	if (!currentPlay) return <FallbackPage />;
 
 	return (
 		<div className="content-container votePage">
 			<div className="votePage__presentation">
 				{/* play presentation */}
 				<img
-					src={play.image}
+					src={currentPlay.image}
 					className="votePage__presentation-image"
 				/>
-				<div className="votePage__presentation-title">{play.title}</div>
+				<div className="votePage__presentation-title">
+					{currentPlay.title}
+				</div>
 				<div className="votePage__presentation-description">
-					{truncateText(play.description, 400)}
+					{truncateText(currentPlay.description, 400)}
 					...
 					<a
 						className="votePage__presentation-description-redirect"
-						onClick={() => window.open(play.link, "_blank")}
+						onClick={() => window.open(currentPlay.link, "_blank")}
 					>
 						{" "}
 						See more
@@ -44,7 +47,7 @@ function VotePage() {
 
 			{/* voting section */}
 			<div className="votePage__vote">
-				{voteState.isAllowedToVote ? (
+				{isAllowedToVote ? (
 					<div className="votePage__vote-title">
 						Votează <GoInfo />
 						{/* will add info modal here */}
@@ -59,7 +62,7 @@ function VotePage() {
 						onClick={() => {
 							handleCastVote("DA");
 						}}
-						disabled={!voteState.isAllowedToVote}
+						disabled={!isAllowedToVote}
 					>
 						DA
 					</button>
@@ -67,7 +70,7 @@ function VotePage() {
 						onClick={() => {
 							handleCastVote("NU");
 						}}
-						disabled={!voteState.isAllowedToVote}
+						disabled={!isAllowedToVote}
 					>
 						NU
 					</button>

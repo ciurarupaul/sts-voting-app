@@ -2,11 +2,11 @@ import apiConfig from "./apiConfig.js";
 
 // all functions return boolean answers (after destructuring)
 
-export async function isAllowedToVote(anonId, votedPlayId) {
+export async function isAllowedToVote(anonId, playId) {
 	const response = await apiConfig.get("/auth/isAllowedToVote", {
 		params: {
 			anonId,
-			votedPlayId,
+			playId,
 		},
 	});
 
@@ -21,7 +21,7 @@ export async function checkAdminPassword(password, anonId) {
 	return response.data.isPasswordCorrect;
 }
 
-export async function isLoggedIn() {
+export async function checkJwtToken() {
 	const response = await apiConfig.get("/auth/isLoggedIn");
 
 	return response.data;

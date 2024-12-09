@@ -1,20 +1,25 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAdminContext } from "../context/adminContext";
-import { useEffect, useState } from "react";
 import { Loader } from "../ui/Loader";
 
 function AdminPage() {
-	const adminState = useAdminContext();
 	const navigate = useNavigate();
+	const { adminState } = useAdminContext();
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		if (!adminState.isLoggedIn || !adminState.token) {
-			navigate("/login");
+		if (adminState.isLoading) {
+			setIsLoading(true);
+			return;
 		}
 
 		setIsLoading(false);
-	}, [adminState.isLoggedIn, adminState.token, navigate]);
+
+		if (!adminState.isLoggedIn || !adminState.token) {
+			navigate("/login");
+		}
+	}, [adminState, navigate]);
 
 	if (isLoading) return <Loader />;
 

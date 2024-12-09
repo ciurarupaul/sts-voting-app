@@ -25,15 +25,6 @@ const Play = sequelize.define(
 			type: DataTypes.STRING,
 			allowNull: true,
 		},
-		// the date and time when voting for this play starts
-		startVote: {
-			type: DataTypes.DATE,
-			allowNull: false,
-		},
-		endVote: {
-			type: DataTypes.DATE,
-			allowNull: false,
-		},
 	},
 	{
 		tableName: "Plays",

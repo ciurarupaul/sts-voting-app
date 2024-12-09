@@ -7,7 +7,7 @@ dotenv.config();
 
 const signToken = (anonId) => {
 	return jwt.sign({ anonId }, process.env.JWT_SECRET, {
-		expiresIn: process.env.JWT_EXPIRES_IN,
+		expiresIn: `${process.env.JWT_COOKIE_EXPIRES_IN}h`,
 	});
 };
 
@@ -16,7 +16,7 @@ const createSendToken = (anonId, res) => {
 	const token = signToken(anonId);
 	const cookieOptions = {
 		expires: new Date(
-			Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+			Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 60 * 60 * 1000
 		),
 		httpOnly: true,
 		// sameSite: "None", // **** add if back and front are on different domains ****
@@ -28,7 +28,7 @@ const createSendToken = (anonId, res) => {
 
 	res.status(201).json({
 		token,
-		user: id,
+		user: anonId,
 	});
 };
 
@@ -36,16 +36,16 @@ const authController = {
 	isAllowedToVote: async (req, res) => {
 		// this checks the db for another vote from the same anonId
 		// must provide the user's anonId and the play's id
-		const { anonId, votedPlayId } = req.query;
+		const { anonId, playId } = req.query;
 		const { Vote } = models;
 
-		if (!anonId || !votedPlayId)
+		if (!anonId || !playId)
 			res.status(400).json({
 				message: "Please provide the id for both the play and the user",
 				isAllowed: false,
 			});
 
-		const response = checkPlayId(votedPlayId);
+		const response = checkPlayId(playId);
 		if (!response) {
 			res.status(400).json({ message: "Invalid play id" });
 		}
@@ -55,7 +55,7 @@ const authController = {
 				// match both provided ids
 				where: {
 					anonId,
-					votedPlayId,
+					votedPlayId: playId,
 				},
 			});
 
@@ -89,6 +89,7 @@ const authController = {
 				console.log("admin password is not defined!");
 				return res.status(500).json({
 					message: "Server misconfig: admin password is not defined",
+					isPasswordCorrect: false,
 				});
 			}
 
@@ -96,6 +97,7 @@ const authController = {
 				console.log("submitted password is missing or undefined");
 				return res.status(400).json({
 					message: "Invalid input: password is required",
+					isPasswordCorrect: false,
 				});
 			}
 
@@ -103,22 +105,22 @@ const authController = {
 				submittedPassword === process.env.ADMIN_PASSWORD;
 
 			// if password is correct, sign token
-			if (isPasswordCorrect) createSendToken(anonId, res);
+			if (isPasswordCorrect) return createSendToken(anonId, res);
 
 			return res.status(200).json({
-				message: isPasswordCorrect
-					? "Validation successful"
-					: "Validation failed",
+				message: "Validation failed",
+				isPasswordCorrect: false,
 			});
 		} catch (error) {
 			console.log("Error validating admin password:", error);
 			return res.status(500).json({
 				message: "Unexpected error",
+				isPasswordCorrect: false,
 			});
 		}
 	},
 
-	isLoggedIn: async (req, res) => {
+	checkJwtToken: async (req, res) => {
 		try {
 			let token;
 
@@ -135,7 +137,8 @@ const authController = {
 			if (!token) {
 				return res.status(200).json({
 					message: "Admin is not logged in",
-					isLoggedIn: false,
+					token: null,
+					isTokenValid: false,
 				});
 			}
 
@@ -149,21 +152,23 @@ const authController = {
 				// if expired, clear cookie
 				res.clearCookie("jwt");
 				return res.status(200).json({
-					message: "Token is expired. Please log in again.",
-					isLoggedIn: false,
+					message: "Token is expired.",
+					token: null,
+					isTokenValid: false,
 				});
 			}
 
 			res.status(200).json({
 				message: "Admin is already logged in",
 				token,
-				isLoggedIn: true,
+				isTokenValid: true,
 			});
 		} catch (error) {
 			console.log("Error checking if admin is logged in:", error);
 			return res.status(500).json({
 				message: "Unexpected error",
-				isLoggedIn: false,
+				token: null,
+				isTokenValid: false,
 			});
 		}
 	},

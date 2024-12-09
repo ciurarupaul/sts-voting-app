@@ -4,48 +4,49 @@ import { createContext, useContext, useEffect, useState } from "react";
 import firebaseConfig from "../../api/firebase";
 import { Loader } from "../ui/Loader";
 
+// returns anonId, the user's anonimous firebase id
+
 const UserContext = createContext();
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const UserProvider = ({ children }) => {
-	const [userState, setUserState] = useState({
-		userId: null,
-		isLoading: true,
-	});
+	const [anonId, setAnonId] = useState(null);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		// firebase's onAuthChanges is a listener that tracks changes in authentication state for the given user. unsubscribe as in unmount listener / stop consuming resources when the listener is not needed
 
 		const unsubscribe = onAuthStateChanged(auth, async (user) => {
+			setIsLoading(true);
+
 			try {
 				// if there is an authenticated user
 				if (user) {
-					setUserState({
-						userId: user.uid,
-						isLoading: false,
-					});
+					setAnonId(user.uid);
+					console.log(`user: ${user.uid}`);
 				} else {
 					// handle anonymous user sign-in
 					const userCredential = await signInAnonymously(auth);
-
-					setUserState({
-						userId: userCredential.user.uid,
-						isLoading: false,
-					});
+					setAnonId(userCredential.user.uid);
+					console.log(`user: ${userCredential.user.uid}`);
 				}
 			} catch (error) {
-				console.log("Error with auth: ", error);
+				console.log("Error with userContext: ", error);
+			} finally {
+				setIsLoading(false);
 			}
 		});
 
-		return () => unsubscribe();
+		return () => {
+			unsubscribe();
+		};
 	}, []);
 
 	return (
-		<UserContext.Provider value={{ userState }}>
-			{userState.isLoading ? <Loader /> : children}
+		<UserContext.Provider value={anonId}>
+			{isLoading ? <Loader /> : children}
 		</UserContext.Provider>
 	);
 };

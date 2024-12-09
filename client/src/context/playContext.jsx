@@ -2,52 +2,38 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { getCurrentPlay } from "../../api/apiPlay";
 import { Loader } from "../ui/Loader";
 
+// returns currentPlayId, the id of the play with an active voting session
+
 const PlayContext = createContext();
 
 const PlayProvider = ({ children }) => {
-	const [playState, setPlayState] = useState({
-		currentPlay: null,
-		isLoading: true,
-	});
+	const [currentPlayId, setCurrentPlayId] = useState(1);
+	const [currentPlay, setCurrentPlay] = useState({});
+	const [isLoading, setIsLoading] = useState(true);
+
+	// trigger by switch in admin panel
 
 	useEffect(() => {
-		const fetchCurrentPlay = async () => {
-			try {
-				const play = await getCurrentPlay();
+		const getPlay = async () => {
+			setIsLoading(true);
 
-				setPlayState({
-					currentPlay: play,
-					isLoading: false,
-				});
+			try {
+				const result = await getCurrentPlay(currentPlayId);
+				setCurrentPlay(result || {});
+				console.log(result);
 			} catch (error) {
-				console.log("Error fetching current play: ", error);
-				setPlayState({
-					currentPlay: null,
-					isLoading: false,
-				});
+				console.error("Error fetching play in PlayContext:", error);
+			} finally {
+				setIsLoading(false);
 			}
 		};
 
-		const waitForNextMinute = () => {
-			const now = new Date();
-			const msUntilNextMinute =
-				(60 - now.getSeconds()) * 1000 - now.getMilliseconds();
-
-			setTimeout(() => {
-				fetchCurrentPlay();
-				setInterval(fetchCurrentPlay, 60000);
-			}, msUntilNextMinute);
-		};
-
-		fetchCurrentPlay();
-		waitForNextMinute();
-
-		return () => clearInterval();
-	}, []);
+		getPlay();
+	}, [currentPlayId]);
 
 	return (
-		<PlayContext.Provider value={{ playState }}>
-			{playState.isLoading ? <Loader /> : children}
+		<PlayContext.Provider value={currentPlay}>
+			{isLoading ? <Loader /> : children}
 		</PlayContext.Provider>
 	);
 };
