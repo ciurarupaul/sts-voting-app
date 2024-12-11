@@ -56,3 +56,9 @@ export default function App() {
 		</UserProvider>
 	);
 }
+
+// *********************************************
+// possible improvements
+//     protect db from accidental seeding (which results in purging the db)
+//     (save votes somewhere somehow)
+// *********************************************

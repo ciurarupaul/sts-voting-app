@@ -1,3 +1,6 @@
+@use "../abstracts/_mixins.scss";
+@use "../base/typography.scss";
+
 .overlay {
 	position: fixed;
 	top: 0;
@@ -5,19 +8,71 @@
 	width: 100dvw;
 	height: 100dvh;
 	background-color: rgba(0, 0, 0, 0.2);
-	backdrop-filter: blur(4px);
+	backdrop-filter: blur(2px);
 	z-index: 1000;
 	transition: all 0.5s;
 }
 
+// generic modal
 .modal {
 	position: fixed;
-	top: 50%;
+	width: 90%;
+	height: max-content;
+	top: 30%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	background-color: var(--background);
+	background-color: var(--black);
+	border: 2px solid var(--background);
 	border-radius: 8px;
-	box-shadow: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.12);
-	padding: 3.2rem 4rem;
+	padding: 2rem;
 	transition: all 0.5s;
+
+	&__close {
+		@include mixins.flexCenter();
+		background-color: var(--black);
+		height: 5rem;
+		width: 5rem;
+		padding: 1rem 1rem 0 0;
+		border: none;
+		position: absolute;
+		top: 0;
+		right: 0;
+
+		&:hover {
+			background-color: var(--black);
+			border: none;
+		}
+	}
+}
+
+// start vote confirmation modal
+.confirmStartVoteModal {
+	@include mixins.flexCenter();
+	align-items: start;
+
+	&__text {
+		width: 100%;
+		text-wrap: pretty;
+		text-align: center;
+		z-index: 100;
+		padding: 3rem 0;
+		font-size: typography.$fontsize-medium;
+	}
+
+	&__btns {
+		@include mixins.flexCenter();
+		flex-direction: row;
+		gap: 1rem;
+		width: 100%;
+		justify-content: flex-end;
+	}
+
+	&__btn {
+		padding: 0.75rem 1.25rem;
+		min-width: 6rem;
+
+		&--ok {
+			background-color: var(--black);
+		}
+	}
 }

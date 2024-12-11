@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllPlays } from "../../api/apiPlay";
 import Modal from "./Modal";
-import ConfirmVote from "./modals/ConfirmVote";
+import ConfirmStartVote from "./modals/ConfirmStartVote";
 
 function VoteControl() {
 	const [plays, setPlays] = useState([]);
@@ -37,27 +37,29 @@ function VoteControl() {
 		<Modal>
 			<div className="voteControl page-container">
 				{plays.map((play) => (
-					<div className="voteControl__row" key={play.playId}>
-						<div className="voteControl__row-title">
-							{play.title}
+					<div key={play.playId} className="voteControl__table">
+						<div className="voteControl__row">
+							<div className="voteControl__row-title">
+								{play.title}
+							</div>
+							<Modal.Open opens="confirmStartVote">
+								<button className="voteControl__row-button">
+									START VOT
+								</button>
+							</Modal.Open>
 						</div>
-						<Modal.Open opens="confirmStartVote">
-							<button className="voteControl__row-button">
-								START VOT
-							</button>
-						</Modal.Open>
+
+						{/* 
+						because of the way everything renders and with the createPortal, hte closing function onCloseModal cannot be accessed here, but inside a child component of Modal.Window, where it can be destructured */}
+						<Modal.Window name="confirmStartVote">
+							<ConfirmStartVote
+								handleConfirm={handleConfirm}
+								play={play}
+							/>
+						</Modal.Window>
 					</div>
 				))}
 			</div>
-
-			{/* because of the way everything renders and with the createPortal, hte closing function onCloseModal cannot be accessed here, but inside a child component of Modal.Window, where it can be destructured */}
-
-			<Modal.Window name="confirmStartVote">
-				<ConfirmVote
-					handleConfirm={handleConfirm}
-					play={selectedPlayIndex}
-				/>
-			</Modal.Window>
 		</Modal>
 	);
 }

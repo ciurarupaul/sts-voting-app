@@ -1,0 +1,18 @@
+svg {
+	color: var(--primary);
+	height: 3rem;
+	width: 3rem;
+}
+
+.closeSvg {
+	color: var(--background);
+	stroke-width: 3px;
+
+	&:hover {
+		color: var(--primary);
+	}
+}
+
+.infoSvg {
+	color: var(--background);
+}

@@ -1,9 +1,9 @@
-import { GoInfo } from "react-icons/go";
 import { usePlayContext } from "../context/playContext.jsx";
 import { useUserContext } from "../context/userContext.jsx";
 import { useVoteContext } from "../context/voteContext.jsx";
 import truncateText from "../utils/truncateText.js";
 import FallbackPage from "./FallbackPage.jsx";
+import { InfoSvg } from "../assets/svgs.jsx";
 
 function VotePage() {
 	const { isAllowedToVote, castVoteInContext } = useVoteContext();
@@ -49,12 +49,12 @@ function VotePage() {
 			<div className="votePage__vote">
 				{isAllowedToVote ? (
 					<div className="votePage__vote-title">
-						Votează <GoInfo />
+						Votează <InfoSvg />
 						{/* will add info modal here */}
 					</div>
 				) : (
 					<div className="votePage__vote-title">
-						Vot deja înregistrat <GoInfo />
+						Vot deja înregistrat <InfoSvg />
 					</div>
 				)}
 				<div className="votePage__vote-btns">

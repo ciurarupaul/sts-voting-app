@@ -1,6 +1,7 @@
 import { cloneElement, createContext, useContext, useState } from "react";
 import { createPortal } from "react-dom";
 import { useOutsideClick } from "../hooks/useOutsideClick";
+import { CloseSvg } from "../assets/svgs";
 // fancy ahh ompound component
 // basically everything is handled in this file so when you use it inside another component, everything is uber smooth
 
@@ -40,7 +41,9 @@ function Window({ children, name }) {
 
 		<div className="overlay">
 			<div className="modal" ref={ref}>
-				<button onClick={close}>X</button>
+				<button onClick={close} className="modal__close">
+					<CloseSvg />
+				</button>
 				{/* cloneElement creates a new element that is a copy of the original, with additional props applied*/}
 				{/* extend 'children', add onCloseModal prop to it */}
 				{cloneElement(children, { onCloseModal: close })}
