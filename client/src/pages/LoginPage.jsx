@@ -37,7 +37,7 @@ function LoginPage() {
 	if (isLoading) return <Loader />;
 
 	return (
-		<div className="loginPage">
+		<div className="loginPage page-container">
 			<input type="text" className="loginPage__input" ref={inputRef} />
 			<button
 				className="loginPage__button"

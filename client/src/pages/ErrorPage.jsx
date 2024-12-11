@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 export default function ErrorPage(err) {
 	const navigate = useNavigate();
 	return (
-		<div className="errorPage">
+		<div className="errorPage page-container">
 			<img src="/favicon.png" className="errorPage__logo" />
 
 			<p>Oops, ceva nu a mers bine...</p>

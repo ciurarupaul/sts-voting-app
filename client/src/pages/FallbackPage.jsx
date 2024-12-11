@@ -1,6 +1,6 @@
 export default function ErrorPage() {
 	return (
-		<div className="content-container fallback">
+		<div className="page-container fallback">
 			<div className="fallback__title">
 				Momentan nu există sesiuni de vot active
 			</div>

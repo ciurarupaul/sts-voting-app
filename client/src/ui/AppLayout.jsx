@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 function AppLayout() {
 	return (
-		<div id="container">
+		<div className="container">
 			<img src="/logo.png" className="logo" alt="Logo" />
 			<Outlet />
 		</div>

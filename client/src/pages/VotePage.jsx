@@ -22,7 +22,7 @@ function VotePage() {
 	if (!currentPlay) return <FallbackPage />;
 
 	return (
-		<div className="content-container votePage">
+		<div className="page-container votePage">
 			<div className="votePage__presentation">
 				{/* play presentation */}
 				<img

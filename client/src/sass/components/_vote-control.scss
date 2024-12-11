@@ -1,0 +1,27 @@
+@use "../abstracts/mixins";
+@use "../base/typography";
+
+.voteControl {
+	padding: 0 1rem;
+	@include mixins.flexCenter();
+	gap: 1rem;
+
+	&__row {
+		width: 100%;
+		@include mixins.flexCenter();
+		flex-direction: row;
+		justify-content: space-between;
+
+		&-title {
+			font-size: typography.$fontsize-medium;
+			overflow: hidden;
+		}
+
+		&-button {
+			width: 11rem;
+			padding: 0.5rem 1rem;
+			font-size: typography.$fontsize-medium;
+			font-weight: 400;
+		}
+	}
+}

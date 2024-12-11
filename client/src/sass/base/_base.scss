@@ -25,27 +25,32 @@
 
 html {
 	font-size: 62.5%;
-	height: 100%;
+	height: 100dvh;
 }
 
 body {
 	box-sizing: border-box;
 	min-height: fit-content;
-	max-height: 100vh;
 	background-color: #000000;
 }
 
-#container {
-	height: 100vh;
-	max-height: 100vh;
+// https://www.frontend.fyi/v/finally-a-fix-for-100vh-on-mobile
+// see this for retarded ass 100vh on mobile
+// 100vh doesnt take into account browser ui, svh is for full (uncollapsed) ui, lvh is for collapsed ui, dvh adapts to both (in an ugly ass way, add transitions)
+
+.container {
+	height: 100dvh;
+	max-height: 100dvh;
 	width: 90%;
 	margin: 0 auto;
 	position: relative;
 }
 
-.content-container {
-	// 10rem sigla + 1rem margin-bottom
-	max-height: calc(100vh - 11rem);
+.page-container {
+	// 10rem sigla
+	height: 100%;
+	max-height: calc(100dvh - 10rem - 1rem);
+	// nu stiu de unde e acel 1rem, sa mi bag pula ca m am uitat cateva ore prin css cand i am facut refactoring si nu e nicaieri ??? so da, e 1rem sub sigla
 }
 
 .logo {

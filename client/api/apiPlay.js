@@ -9,3 +9,9 @@ export async function getCurrentPlay(currentPlayId) {
 
 	return response.data.play;
 }
+
+export async function getAllPlays() {
+	const response = await apiConfig.get("/play/getAllPlays");
+
+	return response.data.plays;
+}
