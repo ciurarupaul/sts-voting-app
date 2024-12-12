@@ -30,11 +30,10 @@
 	&__close {
 		@include mixins.flexCenter();
 		background-color: var(--black);
-		height: 5rem;
-		width: 5rem;
-		padding: 1rem 1rem 0 0;
+		height: 6rem;
+		width: 6rem;
 		border: none;
-		position: absolute;
+		position: fixed;
 		top: 0;
 		right: 0;
 
@@ -46,17 +45,24 @@
 }
 
 // start vote confirmation modal
-.confirmStartVoteModal {
+.voteControlModal {
 	@include mixins.flexCenter();
-	align-items: start;
+	font-size: typography.$fontsize-medium;
 
 	&__text {
-		width: 100%;
 		text-wrap: pretty;
 		text-align: center;
-		z-index: 100;
-		padding: 3rem 0;
-		font-size: typography.$fontsize-medium;
+		padding: 6rem 0;
+		width: 100%;
+
+		span {
+			font-weight: 500;
+			color: var(--primary);
+		}
+
+		p {
+			@include mixins.largeRed();
+		}
 	}
 
 	&__btns {
@@ -68,8 +74,7 @@
 	}
 
 	&__btn {
-		padding: 0.75rem 1.25rem;
-		min-width: 6rem;
+		padding: 1rem 1.5rem;
 
 		&--ok {
 			background-color: var(--black);

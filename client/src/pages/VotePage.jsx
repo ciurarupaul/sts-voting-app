@@ -8,8 +8,7 @@ import { InfoSvg } from "../assets/svgs.jsx";
 function VotePage() {
 	const { isAllowedToVote, castVoteInContext } = useVoteContext();
 	const anonId = useUserContext();
-	const currentPlay = usePlayContext();
-	const playId = currentPlay?.playId;
+	const { activePlay, activePlayId: playId } = usePlayContext();
 
 	async function handleCastVote(voteOption) {
 		try {
@@ -19,25 +18,25 @@ function VotePage() {
 		}
 	}
 
-	if (!currentPlay) return <FallbackPage />;
+	if (!activePlay) return <FallbackPage />;
 
 	return (
 		<div className="page-container votePage">
 			<div className="votePage__presentation">
 				{/* play presentation */}
 				<img
-					src={currentPlay.image}
+					src={activePlay.image}
 					className="votePage__presentation-image"
 				/>
 				<div className="votePage__presentation-title">
-					{currentPlay.title}
+					{activePlay.title}
 				</div>
 				<div className="votePage__presentation-description">
-					{truncateText(currentPlay.description, 400)}
+					{truncateText(activePlay.description, 400)}
 					...
 					<a
 						className="votePage__presentation-description-redirect"
-						onClick={() => window.open(currentPlay.link, "_blank")}
+						onClick={() => window.open(activePlay.link, "_blank")}
 					>
 						{" "}
 						See more

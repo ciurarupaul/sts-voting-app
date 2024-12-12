@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { checkAdminPassword, checkJwtToken } from "../../api/apiAuth";
 import { Loader } from "../ui/Loader";
+import { usePlayContext } from "./playContext";
 
 const AdminContext = createContext();
 
@@ -11,13 +12,14 @@ const AdminProvider = ({ children }) => {
 		isLoading: true,
 	});
 
+	const { currentPlayId } = usePlayContext();
+
 	useEffect(() => {
 		const checkLoggedIn = async () => {
 			setAdminState((prevState) => ({ ...prevState, isLoading: true }));
 
 			try {
 				const result = await checkJwtToken();
-				console.log("found logged in user:", result);
 				setAdminState({
 					isLoggedIn: result.isTokenValid,
 					token: result.token,
@@ -35,7 +37,7 @@ const AdminProvider = ({ children }) => {
 		};
 
 		checkLoggedIn();
-	}, []);
+	}, [currentPlayId]);
 
 	const login = async (password, user) => {
 		try {
@@ -47,8 +49,6 @@ const AdminProvider = ({ children }) => {
 			// check said token
 			const { isTokenValid, token: retrievedToken } =
 				await checkJwtToken();
-
-			console.log(`user ${user} is logged in: ${isTokenValid}`);
 
 			if (isTokenValid) {
 				setAdminState({

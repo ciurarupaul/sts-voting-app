@@ -25,12 +25,10 @@ const UserProvider = ({ children }) => {
 				// if there is an authenticated user
 				if (user) {
 					setAnonId(user.uid);
-					console.log(`user: ${user.uid}`);
 				} else {
 					// handle anonymous user sign-in
 					const userCredential = await signInAnonymously(auth);
 					setAnonId(userCredential.user.uid);
-					console.log(`user: ${userCredential.user.uid}`);
 				}
 			} catch (error) {
 				console.log("Error with userContext: ", error);

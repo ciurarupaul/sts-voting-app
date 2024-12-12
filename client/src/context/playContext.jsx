@@ -1,38 +1,53 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getCurrentPlay } from "../../api/apiPlay";
+import {
+	getActivePlayData,
+	getActivePlayId,
+	updateActivePlayId,
+} from "../../api/apiPlay";
 import { Loader } from "../ui/Loader";
-
-// returns currentPlayId, the id of the play with an active voting session
 
 const PlayContext = createContext();
 
 const PlayProvider = ({ children }) => {
-	const [currentPlayId, setCurrentPlayId] = useState(1);
-	const [currentPlay, setCurrentPlay] = useState({});
+	const [activePlayId, setActivePlayId] = useState(null);
+	const [activePlay, setActivePlay] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
-
-	// trigger by switch in admin panel
 
 	useEffect(() => {
 		const getPlay = async () => {
 			setIsLoading(true);
 
 			try {
-				const result = await getCurrentPlay(currentPlayId);
-				setCurrentPlay(result || {});
-				console.log(result);
+				// fetch id from db
+				const fetchedPlayId = await getActivePlayId();
+				setActivePlayId(fetchedPlayId);
+
+				if (activePlay && activePlay.playId !== activePlayId) {
+					// fetch play data
+					const fetchedPlayData = await getActivePlayData(
+						activePlayId
+					);
+					setActivePlay(fetchedPlayData);
+				}
 			} catch (error) {
-				console.error("Error fetching play in PlayContext:", error);
+				console.log("Error fetching play in PlayContext:", error);
 			} finally {
 				setIsLoading(false);
 			}
 		};
 
 		getPlay();
-	}, [currentPlayId]);
+	}, [activePlayId]);
+
+	const updateCurrentPlay = async (playId) => {
+		await updateActivePlayId(playId);
+		setActivePlayId(playId);
+	};
 
 	return (
-		<PlayContext.Provider value={currentPlay}>
+		<PlayContext.Provider
+			value={{ activePlayId, activePlay, updateCurrentPlay }}
+		>
 			{isLoading ? <Loader /> : children}
 		</PlayContext.Provider>
 	);

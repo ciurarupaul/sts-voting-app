@@ -7,7 +7,7 @@ import path from "path";
 import sequelize from "../config/db.js";
 import models from "../models/index.js";
 
-const { Vote, Play } = models;
+const { Play, ActivePlay } = models;
 
 const playsDataPath = path.join(process.cwd(), "seeders", "plays.json");
 
@@ -29,6 +29,10 @@ const seedData = async () => {
 		// insert plays into db
 		await Play.bulkCreate(playsData);
 		console.log("Plays table seeded successfully");
+
+		// insert a null activePLay
+		await ActivePlay.create({ activePlayId: null });
+		console.log("ActivePlay table seeded successfully");
 	} catch (err) {
 		console.error("Unable to connect or seed the db: ", err);
 	} finally {

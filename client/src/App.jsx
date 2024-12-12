@@ -16,11 +16,7 @@ const AdminPage = lazy(() => import("./pages/AdminPage.jsx"));
 
 function DynamicContextProvider({ children }) {
 	if (location.pathname === "/") {
-		return (
-			<PlayProvider>
-				<VoteProvider>{children}</VoteProvider>
-			</PlayProvider>
-		);
+		return <VoteProvider>{children}</VoteProvider>;
 	}
 
 	if (["/login", "/admin"].includes(location.pathname)) {
@@ -48,11 +44,13 @@ function AppRoutes() {
 export default function App() {
 	return (
 		<UserProvider>
-			<DynamicContextProvider>
-				<Suspense fallback={<Loader />}>
-					<AppRoutes />
-				</Suspense>
-			</DynamicContextProvider>
+			<PlayProvider>
+				<DynamicContextProvider>
+					<Suspense fallback={<Loader />}>
+						<AppRoutes />
+					</Suspense>
+				</DynamicContextProvider>
+			</PlayProvider>
 		</UserProvider>
 	);
 }
@@ -61,4 +59,14 @@ export default function App() {
 // possible improvements
 //     protect db from accidental seeding (which results in purging the db)
 //     (save votes somewhere somehow)
+//
+// ---------------------------------------------
+// fix incognito voting
+//     user shouldnt be able to access the app in incognito mode
+//           storage limitation for chromium-based browsers (opera, edge, brave, chrome): check fs, localStorage, sessionStorage
+//           indexedDb (for safari and firefox, completely blocked)
+//
+// ---------------------------------------------
+// force reload all pages when the activePlay changes (somehow)
+//
 // *********************************************

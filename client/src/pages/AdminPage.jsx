@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAdminContext } from "../context/adminContext";
 import { Loader } from "../ui/Loader";
-import VoteSessionControl from "../ui/VoteControl";
+import VoteControl from "../ui/VoteControl";
 import Results from "../ui/Results";
 
 function AdminPage() {
@@ -55,7 +55,7 @@ function AdminPage() {
 			</div>
 
 			<div className="adminPage__content">
-				{isVotePanel ? <VoteSessionControl /> : <Results />}
+				{isVotePanel ? <VoteControl /> : <Results />}
 			</div>
 		</div>
 	);

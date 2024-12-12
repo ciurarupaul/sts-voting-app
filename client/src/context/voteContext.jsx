@@ -14,15 +14,14 @@ const VoteProvider = ({ children }) => {
 	const [isAllowedToVote, setIsAllowedToVote] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 
-	const currentPlay = usePlayContext();
+	const { activePlay, activePlayId: playId } = usePlayContext();
 	const anonId = useUserContext();
-	const playId = currentPlay?.playId;
 
 	useEffect(() => {
 		const checkVote = async () => {
 			setIsLoading(true);
 
-			if (!currentPlay || !anonId) {
+			if (!activePlay || !anonId) {
 				setIsAllowedToVote(false);
 				setIsLoading(false);
 				return;
@@ -33,9 +32,6 @@ const VoteProvider = ({ children }) => {
 				const noPriorVotes = await checkPriorVotes(anonId, playId); // check DB
 
 				setIsAllowedToVote(noFlags && noPriorVotes);
-				console.log(
-					`User is allowed to vote -- ${noFlags && noPriorVotes}`
-				);
 			} catch (error) {
 				console.error("Error checking votes:", error);
 				setIsAllowedToVote(false);
@@ -45,7 +41,7 @@ const VoteProvider = ({ children }) => {
 		};
 
 		checkVote();
-	}, [anonId, currentPlay, playId]);
+	}, [anonId, activePlay, playId]);
 
 	const castVoteInContext = async (anonId, voteOption, playId) => {
 		try {
