@@ -57,16 +57,19 @@
 	&__row {
 		width: 100%;
 		@include mixins.flexCenter();
+		gap: 1rem;
 		flex-direction: row;
 		justify-content: space-between;
 
 		&-title {
 			font-size: typography.$fontsize-medium;
-			overflow: hidden;
+			text-wrap: nowrap;
+			overflow: auto;
 		}
 
 		&-button {
-			width: max-content;
+			width: 100%;
+			max-width: 10rem;
 			padding: 0.75rem 1.5rem;
 			font-size: typography.$fontsize-medium;
 			font-weight: 500;

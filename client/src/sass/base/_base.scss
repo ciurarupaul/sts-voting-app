@@ -13,7 +13,7 @@
 
 :root {
 	--black: #000000;
-	--white: #ffffff;
+	--white: #efe5d0;
 
 	--background: #5c0a10; // main background
 	--background--light: #821619; // use for hover --main
@@ -42,6 +42,8 @@ body {
 	height: 100dvh;
 	max-height: 100dvh;
 	width: 90%;
+	min-width: 30rem;
+	max-width: 50rem;
 	margin: 0 auto;
 	position: relative;
 }

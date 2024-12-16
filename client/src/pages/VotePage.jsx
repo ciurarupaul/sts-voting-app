@@ -1,9 +1,11 @@
+import { InfoSvg } from "../assets/svgs.jsx";
 import { usePlayContext } from "../context/playContext.jsx";
 import { useUserContext } from "../context/userContext.jsx";
 import { useVoteContext } from "../context/voteContext.jsx";
+import Modal from "../ui/Modal.jsx";
+import VoteInfoModal from "../ui/modals/VoteInfoModal.jsx";
 import truncateText from "../utils/truncateText.js";
 import FallbackPage from "./FallbackPage.jsx";
-import { InfoSvg } from "../assets/svgs.jsx";
 
 function VotePage() {
 	const { isAllowedToVote, castVoteInContext } = useVoteContext();
@@ -26,17 +28,21 @@ function VotePage() {
 				{/* play presentation */}
 				<img
 					src={activePlay.image}
+					alt={`Imagine de prezentare pentru piesa ${activePlay.title}`}
 					className="votePage__presentation-image"
 				/>
 				<div className="votePage__presentation-title">
 					{activePlay.title}
 				</div>
 				<div className="votePage__presentation-description">
-					{truncateText(activePlay.description, 400)}
+					{truncateText(activePlay.description, 450)}
 					...
 					<a
 						className="votePage__presentation-description-redirect"
-						onClick={() => window.open(activePlay.link, "_blank")}
+						onClick={(e) => {
+							e.preventDefault();
+							window.open(activePlay.link, "_blank");
+						}}
 					>
 						{" "}
 						See more
@@ -45,36 +51,46 @@ function VotePage() {
 			</div>
 
 			{/* voting section */}
-			<div className="votePage__vote">
-				{isAllowedToVote ? (
-					<div className="votePage__vote-title">
-						Votează <InfoSvg />
-						{/* will add info modal here */}
+			<Modal>
+				<div className="votePage__vote">
+					{isAllowedToVote ? (
+						<div className="votePage__vote-title">Votează</div>
+					) : (
+						<div className="votePage__vote-title">
+							Vot deja înregistrat{" "}
+							<Modal.Open opens="voteInfoModal">
+								<button className="svgTriggerToOpenModal">
+									<InfoSvg />
+								</button>
+							</Modal.Open>
+							<Modal.Window name="voteInfoModal">
+								<VoteInfoModal
+									isAllowedToVote={isAllowedToVote}
+								/>
+							</Modal.Window>
+						</div>
+					)}
+
+					<div className="votePage__vote-btns">
+						<button
+							onClick={() => {
+								if (isAllowedToVote) handleCastVote("DA");
+							}}
+							disabled={!isAllowedToVote}
+						>
+							DA
+						</button>
+						<button
+							onClick={() => {
+								handleCastVote("NU");
+							}}
+							disabled={!isAllowedToVote}
+						>
+							NU
+						</button>
 					</div>
-				) : (
-					<div className="votePage__vote-title">
-						Vot deja înregistrat <InfoSvg />
-					</div>
-				)}
-				<div className="votePage__vote-btns">
-					<button
-						onClick={() => {
-							handleCastVote("DA");
-						}}
-						disabled={!isAllowedToVote}
-					>
-						DA
-					</button>
-					<button
-						onClick={() => {
-							handleCastVote("NU");
-						}}
-						disabled={!isAllowedToVote}
-					>
-						NU
-					</button>
 				</div>
-			</div>
+			</Modal>
 		</div>
 	);
 }

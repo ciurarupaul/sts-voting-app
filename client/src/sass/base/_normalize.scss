@@ -43,3 +43,26 @@ input {
 		outline: none;
 	}
 }
+
+// scrollbar styles
+::-webkit-scrollbar {
+	width: 0.4rem;
+	height: 0.4rem;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--white);
+	border-radius: 6px;
+}
+
+// draggable part of the scrollbar
+::-webkit-scrollbar-thumb {
+	background: var(--background--light);
+	border-radius: 6px;
+	cursor: grab;
+}
+
+// hovered state
+::-webkit-scrollbar-thumb:hover {
+	background: var(--background);
+}
