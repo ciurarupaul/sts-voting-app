@@ -3,10 +3,12 @@
 
 .loginPage {
 	@include mixins.flexCenter();
+	justify-content: start;
 	gap: 2rem;
 
+	margin-top: 25vh;
+
 	&__input {
-		margin-top: 20vh;
 		width: 80%;
 		padding: 1.5rem 2rem;
 		font-weight: 500;

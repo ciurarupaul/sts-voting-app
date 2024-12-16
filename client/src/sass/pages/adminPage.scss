@@ -44,3 +44,84 @@
 		}
 	}
 }
+
+.voteControl {
+	padding: 0 1rem;
+	@include mixins.flexCenter();
+	gap: 1rem;
+
+	&__table {
+		width: 100%;
+	}
+
+	&__row {
+		width: 100%;
+		@include mixins.flexCenter();
+		flex-direction: row;
+		justify-content: space-between;
+
+		&-title {
+			font-size: typography.$fontsize-medium;
+			overflow: hidden;
+		}
+
+		&-button {
+			width: max-content;
+			padding: 0.75rem 1.5rem;
+			font-size: typography.$fontsize-medium;
+			font-weight: 500;
+
+			&--stop {
+				background-color: var(--black);
+			}
+		}
+	}
+}
+
+.results {
+	padding: 0 1rem;
+	font-size: typography.$fontsize-medium;
+	width: 100%;
+
+	&__header {
+		display: flex;
+		justify-content: flex-end;
+		width: 100%;
+		margin: -1rem 0 2rem 0;
+		color: var(--primary);
+		font-weight: 500;
+
+		&-option {
+			@include mixins.flexCenter();
+			width: 6rem;
+			padding: 0.5rem 0;
+		}
+	}
+
+	&__table {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	&__row {
+		@include mixins.flexCenter();
+		justify-content: space-between;
+		flex-direction: row;
+		gap: 1rem;
+
+		&-title {
+			width: calc(100% - 13rem);
+			text-wrap: nowrap;
+			overflow: auto;
+		}
+
+		&-votes {
+			span {
+				display: inline-block;
+				text-align: center;
+				width: 6rem;
+			}
+		}
+	}
+}

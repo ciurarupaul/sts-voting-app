@@ -84,7 +84,7 @@ function VoteControl() {
 								<Modal.Open
 									opens={`confirmStop--${play.playId}`}
 								>
-									<button className="voteControl__row-button">
+									<button className="voteControl__row-button voteControl__row-button--stop">
 										Stop vot
 									</button>
 								</Modal.Open>

@@ -49,7 +49,9 @@ body {
 .page-container {
 	// 10rem sigla
 	height: 100%;
+	width: 100%;
 	max-height: calc(100dvh - 10rem - 1rem);
+	margin: 0 auto;
 	// nu stiu de unde e acel 1rem, sa mi bag pula ca m am uitat cateva ore prin css cand i am facut refactoring si nu e nicaieri ??? so da, e 1rem sub sigla
 }
 

@@ -29,3 +29,13 @@ export async function getAllPlays() {
 
 	return response.data.plays;
 }
+
+export async function getVoteResultsForPlay(playId) {
+	const response = await apiConfig.get("/play/getVoteResultsForPlay", {
+		params: {
+			playId,
+		},
+	});
+
+	return response.data.results;
+}

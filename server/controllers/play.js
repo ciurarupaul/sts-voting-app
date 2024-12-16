@@ -1,4 +1,5 @@
 import models from "../models/index.js";
+import sequelize from "../config/db.js";
 
 const playControler = {
 	getActivePlayId: async (req, res) => {
@@ -106,6 +107,41 @@ const playControler = {
 			res.status(500).json({
 				message: "Error fetching plays",
 				plays: null,
+				error,
+			});
+		}
+	},
+
+	getVoteResultsForPlay: async (req, res) => {
+		const { Vote } = models;
+		const { playId } = req.query;
+
+		try {
+			const voteResults = await Vote.findAll({
+				attributes: [
+					"voteOption",
+					[
+						sequelize.fn("COUNT", sequelize.col("voteOption")),
+						"count",
+					],
+				],
+				where: { votedPlayId: playId },
+				group: ["voteOption"],
+				raw: true,
+			});
+
+			const results = { DA: 0, NU: 0 };
+			voteResults.forEach((result) => {
+				results[result.voteOption] = parseInt(result.count, 10);
+			});
+
+			return res.status(200).json({ results });
+		} catch (error) {
+			console.log("Error fetching plays:", error);
+
+			res.status(500).json({
+				message: "Error fetching votes",
+				results: null,
 				error,
 			});
 		}
