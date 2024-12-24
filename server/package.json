@@ -4,7 +4,8 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "nodemon server.js",
-		"seed": "node ./seeders/seedPlays.js"
+		"seed-plays": "node ./seeders/seedPlays.js",
+		"seed-other": "node ./seeders/seedVoteAndActivePlay.js"
 	},
 	"author": "",
 	"license": "ISC",
