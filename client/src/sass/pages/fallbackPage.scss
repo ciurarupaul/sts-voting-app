@@ -20,5 +20,9 @@
 	&__link {
 		color: var(--primary);
 		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
 	}
 }

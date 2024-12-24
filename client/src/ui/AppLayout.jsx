@@ -7,6 +7,9 @@ function AppLayout() {
 			<img
 				src="/logo.png"
 				className="logo"
+				height={"100px"}
+				width={"180px"}
+				loading="lazy"
 				alt="Logo"
 				onClick={() => navigate("/")}
 			/>

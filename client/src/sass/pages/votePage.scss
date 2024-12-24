@@ -4,11 +4,11 @@
 .votePage {
 	@include mixins.flexCenter();
 	justify-content: flex-start;
+
 	&__presentation {
 		@include mixins.flexCenter();
 
 		&-image {
-			width: 100%;
 			border: 3px solid var(--background--light);
 			border-radius: 1.2rem;
 		}
@@ -29,6 +29,11 @@
 
 			&-redirect {
 				color: var(--primary);
+				cursor: pointer;
+
+				&:hover {
+					text-decoration: underline;
+				}
 			}
 		}
 	}

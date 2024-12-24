@@ -26,14 +26,12 @@ function VotePage() {
 		<div className="page-container votePage">
 			<div className="votePage__presentation">
 				{/* play presentation */}
-				{/* <img
+				<img
 					src={activePlay.image}
 					alt={`Imagine de prezentare pentru piesa ${activePlay.title}`}
-					className="votePage__presentation-image"
-				/> */}
-				<img
-					src={"/knockout.webp"}
-					alt={`Imagine de prezentare pentru piesa ${activePlay.title}`}
+					loading="lazy"
+					width={"100%"}
+					height={"100%"}
 					className="votePage__presentation-image"
 				/>
 				<div className="votePage__presentation-title">
@@ -41,7 +39,7 @@ function VotePage() {
 				</div>
 				<div className="votePage__presentation-description">
 					{truncateText(activePlay.description, 450)}
-					...
+					...{" "}
 					<a
 						className="votePage__presentation-description-redirect"
 						onClick={(e) => {
@@ -49,7 +47,6 @@ function VotePage() {
 							window.open(activePlay.link, "_blank");
 						}}
 					>
-						{" "}
 						See more
 					</a>
 				</div>
