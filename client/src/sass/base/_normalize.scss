@@ -26,6 +26,7 @@ button {
 	&:disabled {
 		background-color: var(--background--dark);
 		cursor: not-allowed;
+		border: 2px solid var(--background--light);
 	}
 }
 

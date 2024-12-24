@@ -1,30 +1,18 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AdminProvider } from "./context/adminContext.jsx";
 import { PlayProvider } from "./context/playContext.jsx";
 import { UserProvider } from "./context/userContext.jsx";
-import { VoteProvider } from "./context/voteContext.jsx";
 import { Loader } from "./ui/Loader.jsx";
 
 import VotePage from "./pages/VotePage.jsx";
 import AppLayout from "./ui/AppLayout.jsx";
+import { VoteProvider } from "./context/voteContext.jsx";
+import { AdminProvider } from "./context/adminContext.jsx";
 
 // lazy loaded components
 const ErrorPage = lazy(() => import("./pages/ErrorPage.jsx"));
 const LoginPage = lazy(() => import("./pages/LoginPage.jsx"));
 const AdminPage = lazy(() => import("./pages/AdminPage.jsx"));
-
-function DynamicContextProvider({ children }) {
-	if (location.pathname === "/") {
-		return <VoteProvider>{children}</VoteProvider>;
-	}
-
-	if (["/login", "/admin"].includes(location.pathname)) {
-		return <AdminProvider>{children}</AdminProvider>;
-	}
-
-	return <>{children}</>;
-}
 
 function AppRoutes() {
 	return (
@@ -45,11 +33,13 @@ export default function App() {
 	return (
 		<UserProvider>
 			<PlayProvider>
-				<DynamicContextProvider>
-					<Suspense fallback={<Loader />}>
-						<AppRoutes />
-					</Suspense>
-				</DynamicContextProvider>
+				<VoteProvider>
+					<AdminProvider>
+						<Suspense fallback={<Loader />}>
+							<AppRoutes />
+						</Suspense>
+					</AdminProvider>
+				</VoteProvider>
 			</PlayProvider>
 		</UserProvider>
 	);

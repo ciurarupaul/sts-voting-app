@@ -32,12 +32,12 @@
 
 @mixin respond($breakpoint) {
 	@if $breakpoint == phone {
-		@media only screen and (min-width: 18.75em) {
-			// min 300px to trigger
+		@media only screen and (max-width: 31.25em) {
+			//max 500px to trigger
 			@content;
 		}
 	}
-	@if $breakpoint == tab-port {
+	@if $breakpoint == notPhone {
 		@media only screen and (min-width: 31.25em) {
 			// min 500px to trigger
 			@content;

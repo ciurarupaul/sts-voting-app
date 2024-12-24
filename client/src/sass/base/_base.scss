@@ -40,7 +40,7 @@ body {
 
 .container {
 	height: 100dvh;
-	max-height: 100dvh;
+	max-height: max-content;
 	width: 90%;
 	min-width: 30rem;
 	max-width: 50rem;
@@ -54,10 +54,14 @@ body {
 	width: 100%;
 	max-height: calc(100dvh - 10rem - 1rem);
 	margin: 0 auto;
-	// nu stiu de unde e acel 1rem, sa mi bag pula ca m am uitat cateva ore prin css cand i am facut refactoring si nu e nicaieri ??? so da, e 1rem sub sigla
+	// nu stiu de unde e 1rem, sa mi bag pula ca m am uitat cateva ore prin css cand i am facut refactoring si nu e nicaieri ??? so da, e 1rem sub sigla
 }
 
 .logo {
 	height: 10rem;
 	margin-left: -3rem;
+
+	&:hover {
+		cursor: pointer;
+	}
 }

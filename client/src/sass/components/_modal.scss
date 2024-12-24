@@ -16,13 +16,20 @@
 // generic modal
 .modal {
 	position: fixed;
+
+	@include mixins.respond(phone) {
+		bottom: 30vh;
+	}
+	@include mixins.respond(notPhone) {
+		top: 20vh;
+	}
+	left: 50%;
+	transform: translateX(-50%);
 	width: 90%;
+	max-width: 50rem;
 	height: max-content;
 	min-height: calc(6rem + 4px); // to include close btn
 	min-width: 30rem;
-	top: 30%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 	background-color: var(--black);
 	border: 2px solid var(--background);
 	border-radius: 8px;
@@ -56,7 +63,7 @@
 	&__text {
 		text-wrap: pretty;
 		text-align: center;
-		padding: 6rem 1rem;
+		padding: 6rem 2rem;
 		width: 100%;
 
 		span {

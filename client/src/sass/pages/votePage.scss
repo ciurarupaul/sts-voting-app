@@ -3,8 +3,7 @@
 
 .votePage {
 	@include mixins.flexCenter();
-	justify-content: space-between;
-
+	justify-content: flex-start;
 	&__presentation {
 		@include mixins.flexCenter();
 
@@ -15,14 +14,17 @@
 		}
 
 		&-title {
-			margin: 2rem 0 1rem 0;
+			margin: 2rem;
 			@include mixins.largeRed();
+
+			@include mixins.respond(notPhone) {
+				padding: 1rem 0;
+			}
 		}
 
 		&-description {
 			font-size: typography.$fontsize-small;
 			height: max-content;
-			margin-top: 1rem;
 			padding: 0 1rem;
 
 			&-redirect {
@@ -34,15 +36,18 @@
 	&__vote {
 		@include mixins.flexCenter();
 		width: 100%;
-		height: 100%;
-		gap: 2rem;
-		padding: 2rem 0;
+		justify-content: flex-start;
+		padding-bottom: 4rem;
 
 		&-title {
 			@include mixins.largeRed();
 			@include mixins.flexCenter();
 			flex-direction: row;
-			margin-bottom: -1rem;
+			padding: 1rem 0;
+
+			@include mixins.respond(notPhone) {
+				padding: 3rem 0;
+			}
 		}
 
 		&-btns {

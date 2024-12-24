@@ -5,8 +5,8 @@
 	@include mixins.flexCenter();
 	justify-content: start;
 	gap: 2rem;
-
-	margin-top: 25vh;
+	height: 100%;
+	padding-top: 25vh;
 
 	&__input {
 		width: 80%;
