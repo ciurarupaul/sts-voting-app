@@ -18,7 +18,7 @@
 	position: fixed;
 
 	@include mixins.respond(phone) {
-		bottom: 30vh;
+		bottom: 40vh;
 	}
 	@include mixins.respond(notPhone) {
 		top: 20vh;
