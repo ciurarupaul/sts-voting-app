@@ -1,5 +1,5 @@
+@use "../base/mixins";
 @use "../base/typography";
-@use "../abstracts/mixins";
 
 .votePage {
 	@include mixins.flexCenter();
@@ -15,7 +15,7 @@
 
 		&-title {
 			margin: 2rem;
-			@include mixins.largeRed();
+			color: var(--primary);
 
 			@include mixins.respond(notPhone) {
 				padding: 1rem 0;
@@ -45,10 +45,11 @@
 		padding-bottom: 4rem;
 
 		&-title {
-			@include mixins.largeRed();
 			@include mixins.flexCenter();
+			gap: 1rem;
+			color: var(--primary);
 			flex-direction: row;
-			padding: 1rem 0;
+			padding: 2rem 0;
 
 			@include mixins.respond(notPhone) {
 				padding: 3rem 0;

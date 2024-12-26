@@ -58,9 +58,9 @@ function VoteControl() {
 				{plays.map((play) => (
 					<div key={play.playId} className="voteControl__table">
 						<div className="voteControl__row">
-							<div className="voteControl__row-title">
+							<h3 className="voteControl__row-title">
 								{play.title}
-							</div>
+							</h3>
 							{selectedPlayId === null ? (
 								// if there is no active play, start
 								<Modal.Open

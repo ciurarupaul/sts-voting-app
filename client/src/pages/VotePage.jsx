@@ -8,57 +8,66 @@ import truncateText from "../utils/truncateText.js";
 import FallbackPage from "./FallbackPage.jsx";
 
 function VotePage() {
+	// context data
 	const { isAllowedToVote, castVoteInContext } = useVoteContext();
 	const anonId = useUserContext();
 	const { activePlay, activePlayId: playId } = usePlayContext();
 
+	// handlers
 	async function handleCastVote(voteOption) {
 		try {
 			await castVoteInContext(anonId, voteOption, playId);
 		} catch (error) {
-			console.log(error);
+			console.log("Failed to cast vote: ", error);
 		}
+	}
+
+	function handleRedirect(e) {
+		e.preventDefault();
+		window.open(activePlay.link, "_blank");
 	}
 
 	if (!activePlay) return <FallbackPage />;
 
+	const truncatedDescription =
+		activePlay.description && activePlay.description.length > 450
+			? truncateText(activePlay.description, 450)
+			: activePlay.description;
+
 	return (
-		<div className="page-container votePage">
+		<section className="votePage">
+			{/* play presentation */}
 			<div className="votePage__presentation">
-				{/* play presentation */}
 				<img
 					src={activePlay.image}
 					alt={`Imagine de prezentare pentru piesa ${activePlay.title}`}
+					className="votePage__presentation-image"
 					loading="lazy"
 					width={"100%"}
 					height={"100%"}
-					className="votePage__presentation-image"
 				/>
-				<div className="votePage__presentation-title">
+				<h2 className="votePage__presentation-title">
 					{activePlay.title}
-				</div>
-				<div className="votePage__presentation-description">
-					{truncateText(activePlay.description, 450)}
-					...{" "}
+				</h2>
+				<p className="votePage__presentation-description">
+					{truncatedDescription + "... "}
 					<a
 						className="votePage__presentation-description-redirect"
-						onClick={(e) => {
-							e.preventDefault();
-							window.open(activePlay.link, "_blank");
-						}}
+						onClick={handleRedirect}
+						href="#"
 					>
-						See more
+						Citește mai mult
 					</a>
-				</div>
+				</p>
 			</div>
 
 			{/* voting section */}
 			<Modal>
 				<div className="votePage__vote">
 					{isAllowedToVote ? (
-						<div className="votePage__vote-title">Votează</div>
+						<h2 className="votePage__vote-title">Votează</h2>
 					) : (
-						<div className="votePage__vote-title">
+						<h2 className="votePage__vote-title">
 							Vot deja înregistrat{" "}
 							<Modal.Open opens="voteInfoModal">
 								<button className="svgTriggerToOpenModal">
@@ -70,7 +79,7 @@ function VotePage() {
 									isAllowedToVote={isAllowedToVote}
 								/>
 							</Modal.Window>
-						</div>
+						</h2>
 					)}
 
 					<div className="votePage__vote-btns">
@@ -93,7 +102,7 @@ function VotePage() {
 					</div>
 				</div>
 			</Modal>
-		</div>
+		</section>
 	);
 }
 

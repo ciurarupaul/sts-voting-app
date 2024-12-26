@@ -37,7 +37,7 @@ function LoginPage() {
 	if (isLoading) return <Loader />;
 
 	return (
-		<div className="loginPage page-container">
+		<section className="loginPage">
 			<input type="text" className="loginPage__input" ref={inputRef} />
 			<button
 				className="loginPage__button"
@@ -45,7 +45,7 @@ function LoginPage() {
 					await login(inputRef.current.value, user);
 				}}
 			/>
-		</div>
+		</section>
 	);
 }
 

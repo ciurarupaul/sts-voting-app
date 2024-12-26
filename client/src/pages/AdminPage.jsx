@@ -28,8 +28,8 @@ function AdminPage() {
 	if (isLoading) return <Loader />;
 
 	return (
-		<div className="page-container adminPage">
-			<div className="adminPage__btns">
+		<section className="adminPage">
+			<nav className="adminPage__btns">
 				<button
 					className={`${
 						isVotePanel ? "adminPage__btns__btn--left--active" : ""
@@ -52,12 +52,12 @@ function AdminPage() {
 				>
 					Rezultate
 				</button>
-			</div>
+			</nav>
 
 			<div className="adminPage__content">
 				{isVotePanel ? <VoteControl /> : <Results />}
 			</div>
-		</div>
+		</section>
 	);
 }
 

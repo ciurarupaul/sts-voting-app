@@ -44,19 +44,3 @@ export default function App() {
 		</UserProvider>
 	);
 }
-
-// *********************************************
-// possible improvements
-//     protect db from accidental seeding (which results in purging the db)
-//     (save votes somewhere somehow)
-//
-// ---------------------------------------------
-// fix incognito voting
-//     user shouldnt be able to access the app in incognito mode
-//           storage limitation for chromium-based browsers (opera, edge, brave, chrome): check fs, localStorage, sessionStorage
-//           indexedDb (for safari and firefox, completely blocked)
-//
-// ---------------------------------------------
-// force reload all pages when the activePlay changes (somehow)
-//
-// *********************************************

@@ -1,4 +1,4 @@
-@use "../abstracts/mixins";
+@use "../base/mixins";
 @use "../base/typography";
 
 .errorPage {
@@ -9,9 +9,7 @@
 	margin-top: -10vh;
 	@include mixins.flexCenter();
 	gap: 3rem;
-
-	@include mixins.largeRed();
-	color: var(--white);
+	text-align: center;
 
 	&__logo {
 		width: 50%;

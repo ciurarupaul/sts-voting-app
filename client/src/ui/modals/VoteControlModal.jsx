@@ -9,15 +9,15 @@ function VoteControlModal({
 	return (
 		<div className="voteControlModal">
 			{selectedPlayId === null ? (
-				<div className="voteControlModal__text">
+				<p className="voteControlModal__text">
 					Începi sesiunea de vot pentru
 					<span> {play.title}</span>?
-				</div>
+				</p>
 			) : selectedPlayId === play.playId ? (
-				<div className="voteControlModal__text">
+				<p className="voteControlModal__text">
 					Oprești sesiunea de vot pentru
 					<span> {play.title}</span>?
-				</div>
+				</p>
 			) : (
 				<div className="voteControlModal__text">
 					<p>O altă sesiune de vot este în desfășuare!</p> <br />

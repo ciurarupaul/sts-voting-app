@@ -41,15 +41,15 @@ function Results() {
 	if (isLoading) return <Loader />;
 
 	return (
-		<div className="results page-container">
-			<div className="results__header">
+		<section className="results page-container">
+			<header className="results__header">
 				<div className="results__header-option">DA</div>
 				<div className="results__header-option">NU</div>
-			</div>
+			</header>
 			<ul className="results__table">
 				{plays.map((play) => (
 					<li key={play.playId} className="results__row">
-						<div className="results__row-title">{play.title}</div>
+						<h3 className="results__row-title">{play.title}</h3>
 						<div className="results__row-votes">
 							<span>{play.votes.DA || 0}</span>
 							<span>{play.votes.NU || 0}</span>
@@ -57,7 +57,7 @@ function Results() {
 					</li>
 				))}
 			</ul>
-		</div>
+		</section>
 	);
 }
 

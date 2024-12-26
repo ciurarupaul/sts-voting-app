@@ -1,10 +1,10 @@
 export default function ErrorPage() {
 	return (
-		<div className="page-container fallback">
-			<div className="fallback__title">
+		<section className="fallback">
+			<h1 className="fallback__title">
 				Momentan nu există sesiuni de vot active
-			</div>
-			<div className="fallback__text">
+			</h1>
+			<h3 className="fallback__text">
 				Află mai multe pe{" "}
 				<a
 					className="fallback__link"
@@ -14,7 +14,7 @@ export default function ErrorPage() {
 				>
 					sts.sisc.ro
 				</a>
-			</div>
-		</div>
+			</h3>
+		</section>
 	);
 }

@@ -1,16 +1,16 @@
-@use "../abstracts/mixins";
+@use "../base/mixins";
 @use "../base/typography";
 
 .fallback {
 	height: 100%;
 	margin-top: -10vh;
 	@include mixins.flexCenter();
-	gap: 2rem;
+	gap: 3rem;
 	text-align: center;
 	color: var(--white);
 
 	&__title {
-		@include mixins.largeRed();
+		color: var(--primary);
 	}
 
 	&__text {

@@ -21,7 +21,7 @@ const VoteProvider = ({ children }) => {
 		const checkVote = async () => {
 			setIsLoading(true);
 
-			if (!activePlay || !anonId) {
+			if (!playId || !anonId) {
 				setIsAllowedToVote(false);
 				setIsLoading(false);
 				return;

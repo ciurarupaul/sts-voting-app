@@ -1,12 +1,18 @@
 import { useNavigate } from "react-router-dom";
 
-export default function ErrorPage(err) {
+export default function ErrorPage() {
 	const navigate = useNavigate();
-	return (
-		<div className="errorPage page-container">
-			<img src="/favicon.png" className="errorPage__logo" />
 
-			<p>Oops, ceva nu a mers bine...</p>
+	return (
+		<section className="errorPage">
+			<img
+				src="/favicon.png"
+				className="errorPage__logo"
+				alt="Logo Serile Teatrului Studențesc"
+				loading="lazy"
+			/>
+
+			<h1>Oops, ceva nu a mers bine...</h1>
 			<button
 				className="errorPage__btn"
 				onClick={() => {
@@ -15,6 +21,6 @@ export default function ErrorPage(err) {
 			>
 				Înapoi la pagina principală
 			</button>
-		</div>
+		</section>
 	);
 }

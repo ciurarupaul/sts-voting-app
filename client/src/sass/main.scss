@@ -1,13 +1,10 @@
 @charset "UTF-8";
 
 @use "base/base";
-@use "base/fonts";
-@use "base/helpers";
+@use "base/mixins";
 @use "base/normalize";
 @use "base/typography";
 
 @use "components/index" as components;
-
-@use "layout/index" as layout;
 
 @use "pages/index" as pages;

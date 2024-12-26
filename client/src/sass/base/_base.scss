@@ -1,14 +1,9 @@
-@use "../abstracts/mixins";
-@use "./typography";
-@use "./normalize";
-
 *,
 *::after,
 *::before {
 	margin: 0;
 	padding: 0;
 	box-sizing: inherit;
-	font-family: "Jost", sans-serif;
 }
 
 :root {
@@ -20,7 +15,6 @@
 	--background--dark: #2a0f10; // use for hover --secondary
 
 	--primary: #b72025; // text
-	// --primary--bold: #4e1114; // wont use this to simplify color palette
 }
 
 html {

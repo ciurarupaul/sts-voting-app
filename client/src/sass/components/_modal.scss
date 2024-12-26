@@ -1,5 +1,5 @@
-@use "../abstracts/_mixins.scss";
-@use "../base/typography.scss";
+@use "../base/mixins";
+@use "../base/typography";
 
 .overlay {
 	position: fixed;
@@ -72,7 +72,7 @@
 		}
 
 		p {
-			@include mixins.largeRed();
+			color: var(--primary);
 		}
 	}
 
