@@ -1,5 +1,4 @@
 # voting-app
-[Visit website](https://test1.sisc.ro/)
 
 This application was created to simplify the voting process for [Serile Teatrului Studențesc](https://sts.sisc.ro/), a project organized by [SiSC](https://sisc.ro/). 
 
